@@ -1,0 +1,56 @@
+{
+  "realm" : "demo",
+  "users" : [ {
+    "id" : "67325ec9-ea66-4e8e-b83b-64ba76a41fe8",
+    "createdTimestamp" : 1529984317678,
+    "username" : "user001",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "Taro",
+    "lastName" : "Nomura",
+    "email" : "user001@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "R6F55whIILi+Vq5HkyypdUcywbRpekx+egGwAqRA3F5sOH2w9wuIFRyeP6KxbeTPi1eAqY0RyO4m1qTQ39ZbPg==",
+      "salt" : "COEQRS4rHIvPIpIp9ioLtA==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1529984332937,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "c39db19f-e312-40c9-b0fe-409a89fdcd36",
+    "createdTimestamp" : 1529984360551,
+    "username" : "user002",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "Jiro",
+    "lastName" : "Nomura",
+    "email" : "user002@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "KSFI3Jr/DJslpBo8c8A538ZQSaYsR5tgcYBkmTiDlcseA7IbBkR5HzNqrbW+6A6MUvnpM+uO5qxBGX9cGU62yQ==",
+      "salt" : "0LGL3ajRGFMZScNSFUM7ew==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1529984372420,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

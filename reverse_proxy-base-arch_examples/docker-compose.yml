@@ -1,0 +1,118 @@
+version: '3'
+
+volumes:
+
+  mysql_data:
+      driver: local
+
+services:
+
+  lb:
+    container_name: kc-example-lb
+    build:
+      context: ./lb
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    depends_on:
+      - rp
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./lb/certs:/etc/nginx/certs
+    networks:
+      default:
+        aliases:
+          - sso.example.com
+          - app1.example.com
+          - app2.example.com
+
+  rp:
+    container_name: kc-example-rp
+    build:
+      context: ./reverse_proxy
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    ports:
+      - 81:80
+    environment:
+      VIRTUAL_HOST: "*.example.com"
+      CERT_NAME: example
+#      HTTPS_METHOD: noredirect
+    networks:
+       - default
+
+  db:
+    container_name: kc-example-db
+    build:
+      context: ./mysql
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+    networks:
+      - default
+
+  op:
+    container_name: kc-example-op
+    build:
+      context: ./keycloak
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: db
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: password
+      PROXY_ADDRESS_FORWARDING: "true"
+    networks:
+      - default
+
+  app1:
+    container_name: kc-example-app1
+    build:
+      context: ./echo
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    ports:
+      - 8081:80
+    networks:
+      - default
+
+  app2:
+    container_name: kc-example-app2
+    build:
+      context: ./echo
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    ports:
+      - 8082:80
+    networks:
+      - default

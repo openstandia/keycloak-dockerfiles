@@ -24,6 +24,7 @@
     } ],
     "disableableCredentialTypes" : [ "password" ],
     "requiredActions" : [ ],
+    "realmRoles" : [ "app2.user", "app1.admin" ],
     "notBefore" : 0,
     "groups" : [ ]
   }, {
@@ -50,6 +51,7 @@
     } ],
     "disableableCredentialTypes" : [ "password" ],
     "requiredActions" : [ ],
+    "realmRoles" : [ "app2.admin", "app1.user" ],
     "notBefore" : 0,
     "groups" : [ ]
   } ]

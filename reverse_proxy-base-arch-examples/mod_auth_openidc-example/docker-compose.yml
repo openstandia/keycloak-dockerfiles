@@ -1,12 +1,20 @@
+#
+# Docker Compose 設定ファイル
+# - Keycloak & mod_auth_openidc example -
+#
 version: '3'
 
+# ボリューム設定(データ永続化)
 volumes:
 
+  # MySQL用ボリューム設定
   mysql_data:
       driver: local
 
+# 各コンテナサービス設定
 services:
 
+  # LBコンテナ設定
   lb:
     container_name: kc-example-lb
     build:
@@ -30,6 +38,7 @@ services:
           - app1.example.com
           - app2.example.com
 
+  # RP(Apache+mod_auth_openidc)コンテナ設定
   rp:
     container_name: kc-example-rp
     build:
@@ -43,10 +52,10 @@ services:
     environment:
       VIRTUAL_HOST: "*.example.com"
       CERT_NAME: example
-#      HTTPS_METHOD: noredirect
     networks:
        - default
 
+  # DB(MySQL)コンテナ設定
   db:
     container_name: kc-example-db
     build:
@@ -61,12 +70,13 @@ services:
       - mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: keycloak
+      MYSQL_DATABASE: keycloakdb
       MYSQL_USER: keycloak
       MYSQL_PASSWORD: password
     networks:
       - default
 
+  # OP(Keycloak)コンテナ設定
   op:
     container_name: kc-example-op
     build:
@@ -82,15 +92,17 @@ services:
     environment:
       DB_VENDOR: MYSQL
       DB_ADDR: db
-      DB_DATABASE: keycloak
+      DB_DATABASE: keycloakdb
       DB_USER: keycloak
       DB_PASSWORD: password
+      JDBC_PARAMS: "useSSL=false"
 #      KEYCLOAK_USER: admin
 #      KEYCLOAK_PASSWORD: password
       PROXY_ADDRESS_FORWARDING: "true"
     networks:
       - default
 
+  # App1コンテナ設定
   app1:
     container_name: kc-example-app1
     build:
@@ -104,6 +116,7 @@ services:
     networks:
       - default
 
+  # App2コンテナ設定
   app2:
     container_name: kc-example-app2
     build:

@@ -1,5 +1,5 @@
 # Dockerイメージの指定
-FROM jboss/keycloak:4.1.0.Final
+FROM jboss/keycloak:4.3.0.Final
 
 # demo用初期設定ファイルの配置
 COPY *.json /opt/jboss/import/

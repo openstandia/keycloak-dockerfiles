@@ -6,8 +6,8 @@ Example of `reverse_proxy-based` architecture
 
 This is a set of Docker Compose files related to Keycloak.
 
- - [Keycloak & mod_auth_openidc](./reverse_proxy-base-arch-examples/mod_auth_openidc-example) example
- - [Keycloak & keycloak-proxy](./reverse_proxy-base-arch-examples/keycloak-proxy-example) example -> comming soon.
+ - [Keycloak & mod_auth_openidc](./reverse_proxy-based-arch-examples/kc-mod_auth_openidc-example) example
+ - [Keycloak & keycloak-proxy](./reverse_proxy-based-arch-examples/kc-keycloak-proxy-example) example -> comming soon.
 
 
 License

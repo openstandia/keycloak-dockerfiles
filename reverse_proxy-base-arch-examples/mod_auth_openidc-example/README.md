@@ -33,8 +33,8 @@ To confirm the sample, start the browser and use the following URL, userid and p
 |name|url|userid/pass|
 |:--|:--|:--|
 |Keycloak Admin Console|https://sso.example/auth/admin/|admin/password|
-|Securing Applications1|https://app1.example.com/|user001/password|
-|Securing Applications2|https://app2.example.com/|user002/password|
+|Securing Application1|https://app1.example.com/|user001/password|
+|Securing Application2|https://app2.example.com/|user002/password|
 
 
 Example Stop

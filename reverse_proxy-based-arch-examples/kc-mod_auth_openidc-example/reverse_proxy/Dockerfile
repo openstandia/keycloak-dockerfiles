@@ -1,8 +1,8 @@
 # Dockerイメージの指定
-FROM centos:centos7
+FROM centos:7.6.1810
 
 # 各種バージョンの定義
-ENV HTTPD_VERSION=2.4.6-80.el7.centos \
+ENV HTTPD_VERSION=2.4.6-88.el7.centos \
     MOD_AUTH_OPENIDC_VERSION=2.3.6-1.el7.x86_64 \
     MOD_AUTH_OPENIDC_SHORT_VERSION=2.3.6 \
     HIREDIS_VERSION=0.12.1-1.el7.x86_64 \

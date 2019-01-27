@@ -101,6 +101,9 @@ services:
       PROXY_ADDRESS_FORWARDING: "true"
     networks:
       - default
+# No mac
+#    extra_hosts:
+#      - host.docker.internal:172.18.0.1
 
   # App1コンテナ設定
   app1:
@@ -129,3 +132,22 @@ services:
       - 8082:80
     networks:
       - default
+
+# SMTPコンテナ設定
+  smtp:
+    container_name: kc-example-smtp
+    build:
+      context: ./smtp
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    ports:
+      - 5025:5025
+      - 5080:5080
+    environment:
+      VIRTUAL_HOST: "smtp.example.com"
+      VIRTUAL_PORT: "5080"
+    networks:
+      - default
+

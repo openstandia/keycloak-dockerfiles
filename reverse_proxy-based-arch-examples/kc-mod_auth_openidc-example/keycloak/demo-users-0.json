@@ -1,8 +1,26 @@
 {
   "realm" : "demo",
   "users" : [ {
-    "id" : "67325ec9-ea66-4e8e-b83b-64ba76a41fe8",
-    "createdTimestamp" : 1529984317678,
+    "id" : "3c9a92ff-b111-4fee-a50d-8bca5dcc8503",
+    "createdTimestamp" : 1548576216971,
+    "username" : "service-account-demo-app1",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "email" : "service-account-demo-app1@placeholder.org",
+    "serviceAccountClientId" : "demo-app1",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "68091c82-164f-4db4-8d4c-db99f50e88d9",
+    "createdTimestamp" : 1548575447324,
     "username" : "user001",
     "enabled" : true,
     "totp" : false,
@@ -10,26 +28,32 @@
     "firstName" : "Taro",
     "lastName" : "Nomura",
     "email" : "user001@example.com",
+    "attributes" : {
+      "locale" : [ "en" ]
+    },
     "credentials" : [ {
       "type" : "password",
-      "hashedSaltedValue" : "R6F55whIILi+Vq5HkyypdUcywbRpekx+egGwAqRA3F5sOH2w9wuIFRyeP6KxbeTPi1eAqY0RyO4m1qTQ39ZbPg==",
-      "salt" : "COEQRS4rHIvPIpIp9ioLtA==",
+      "hashedSaltedValue" : "qY6ns5bs8F9Hytwa3ZHxdMwn7MRsohKbfEjW3F0q6epIliB7psDAQNWWOR+qYajGY33t4rnyVXBMMaIu3TnkCQ==",
+      "salt" : "qiw6tlQ1X/re/hXicMluLQ==",
       "hashIterations" : 27500,
       "counter" : 0,
       "algorithm" : "pbkdf2-sha256",
       "digits" : 0,
       "period" : 0,
-      "createdDate" : 1529984332937,
+      "createdDate" : 1548575461923,
       "config" : { }
     } ],
     "disableableCredentialTypes" : [ "password" ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "app2.user", "app1.admin" ],
+    "realmRoles" : [ "app1.admin", "app2.user" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
     "notBefore" : 0,
     "groups" : [ ]
   }, {
-    "id" : "c39db19f-e312-40c9-b0fe-409a89fdcd36",
-    "createdTimestamp" : 1529984360551,
+    "id" : "14f872ac-a356-44dd-bd6f-05a2f60e9603",
+    "createdTimestamp" : 1548575487375,
     "username" : "user002",
     "enabled" : true,
     "totp" : false,
@@ -39,19 +63,22 @@
     "email" : "user002@example.com",
     "credentials" : [ {
       "type" : "password",
-      "hashedSaltedValue" : "KSFI3Jr/DJslpBo8c8A538ZQSaYsR5tgcYBkmTiDlcseA7IbBkR5HzNqrbW+6A6MUvnpM+uO5qxBGX9cGU62yQ==",
-      "salt" : "0LGL3ajRGFMZScNSFUM7ew==",
+      "hashedSaltedValue" : "NoiEv9/rlVrkX8xX3IdhPHHjGYtCoiinhNCgEx0WobJIMSMJO2pGNqupbIDtIg3eaGMrny8fEf5MPu+JM1rtrA==",
+      "salt" : "AAvOJ5OpNe/3zhYK9gJOlA==",
       "hashIterations" : 27500,
       "counter" : 0,
       "algorithm" : "pbkdf2-sha256",
       "digits" : 0,
       "period" : 0,
-      "createdDate" : 1529984372420,
+      "createdDate" : 1548575499621,
       "config" : { }
     } ],
     "disableableCredentialTypes" : [ "password" ],
     "requiredActions" : [ ],
     "realmRoles" : [ "app2.admin", "app1.user" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
     "notBefore" : 0,
     "groups" : [ ]
   } ]

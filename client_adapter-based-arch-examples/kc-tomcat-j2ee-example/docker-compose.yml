@@ -1,0 +1,134 @@
+#
+# Docker Compose 設定ファイル
+# - Keycloak & Client Adapter (TOMCAT) example -
+#
+version: '3'
+
+# ボリューム設定(データ永続化)
+volumes:
+
+  # MySQL用ボリューム設定
+  mysql_data:
+      driver: local
+
+# 各コンテナサービス設定
+services:
+
+  # LBコンテナ設定
+  lb:
+    container_name: kc-example-lb
+    build:
+      context: ./lb
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    depends_on:
+      - op
+      - app1
+      - app2
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./lb/certs:/etc/nginx/certs
+    networks:
+      default:
+
+  # DB(MySQL)コンテナ設定
+  db:
+    container_name: kc-example-db
+    build:
+      context: ./mysql
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloakdb
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+    networks:
+      - default
+
+  # OP(Keycloak)コンテナ設定
+  op:
+    container_name: kc-example-op
+    build:
+      context: ./keycloak
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    environment:
+      VIRTUAL_HOST: "sso.example.com"
+      VIRTUAL_PORT: "8080"
+      CERT_NAME: example
+      DB_VENDOR: MYSQL
+      DB_ADDR: db
+      DB_DATABASE: keycloakdb
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      JDBC_PARAMS: "useSSL=false"
+#      KEYCLOAK_USER: admin
+#      KEYCLOAK_PASSWORD: password
+      PROXY_ADDRESS_FORWARDING: "true"
+    networks:
+      - default
+    extra_hosts:
+      - host.docker.internal:172.18.0.1
+      - sso.example.com:172.18.0.1
+
+  # App1コンテナ設定
+  app1:
+    container_name: kc-example-app1
+    build:
+      context: ./tomcat1
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    depends_on:
+      - op
+    ports:
+      - 8081:8080
+    environment:
+      VIRTUAL_HOST: "authz.example.com"
+      VIRTUAL_PORT: "8081"
+      CERT_NAME: example
+    networks:
+      - default
+    extra_hosts:
+      - sso.example.com:172.18.0.1
+
+  # App2コンテナ設定
+  app2:
+    container_name: kc-example-app2
+    build:
+      context: ./tomcat2
+      args:
+        http_proxy: ${http_proxy}
+        https_proxy: ${https_proxy}
+        no_proxy: ${no_proxy}
+    depends_on:
+      - op
+    ports:
+      - 8082:8080
+    environment:
+      VIRTUAL_HOST: "uma.example.com"
+      VIRTUAL_PORT: "8082"
+      CERT_NAME: example
+    networks:
+      - default
+    extra_hosts:
+      - sso.example.com:172.18.0.1

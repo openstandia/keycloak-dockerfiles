@@ -1,0 +1,234 @@
+{
+  "realm" : "demo-authz",
+  "users" : [ {
+    "id" : "13c145e8-95e6-4129-ab55-ed7f202d6b8d",
+    "username" : "admin001",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "admin001",
+    "lastName" : "admin001",
+    "email" : "admin001@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "i8mRAJiJppQ0lUI+MjBiSenndKFq0kBJ+bS/DobRKFYXq8ENgaYCWlrZ3T/od/3VnkweuhHVTl61n6QgjhNViw==",
+      "salt" : "8ce6hEg4oKLkOCe6PCRUWg==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1549268063861,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization", "admin" ],
+    "clientRoles" : {
+      "account" : [ "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "59822729-b1ba-49f5-9b95-aaca58e9a4f5",
+    "username" : "admin002",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "admin002",
+    "lastName" : "admin002",
+    "email" : "admin002@test.example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "Z99kZkE8ypHgRG/ApgWex57IQuvpWzX8VB9FP3ltxrwpneh/vyGMqbrHRmY0PxwdOTxhGnUAOwssyQbEmk6tug==",
+      "salt" : "B7WEflZEjPu1YQyoVw9cTA==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1549268064419,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization", "admin" ],
+    "clientRoles" : {
+      "account" : [ "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/nri" ]
+  }, {
+    "id" : "97ac7e77-836e-4717-97df-f2fc20118ac5",
+    "username" : "admin003",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "admin003",
+    "lastName" : "admin003",
+    "email" : "admin003@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "KYrxvOYDrX2k2HwNgf0YT46k0HQvaRx+/7N9NwA4PR8NpDiWLojo6SS48eeOC2sNQKO/cLR6iH3uNpuLRgzlzg==",
+      "salt" : "fZqFVBlzsGuV70bFhIjdoQ==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1549268064748,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization", "admin" ],
+    "clientRoles" : {
+      "account" : [ "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/nri/openstandia" ]
+  }, {
+    "id" : "b457bc34-a668-4fb7-a04e-348149c19ce1",
+    "createdTimestamp" : 1549350148593,
+    "username" : "service-account-authz-app",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "email" : "service-account-authz-app@placeholder.org",
+    "serviceAccountClientId" : "authz-app",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access" ],
+    "clientRoles" : {
+      "authz-app" : [ "uma_protection" ],
+      "account" : [ "view-profile", "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "94af53b1-e553-48c7-92d5-4627a85d5d73",
+    "createdTimestamp" : 1549350148676,
+    "username" : "service-account-authz-uma-api",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "email" : "service-account-authz-uma-api@placeholder.org",
+    "serviceAccountClientId" : "authz-uma-api",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access" ],
+    "clientRoles" : {
+      "account" : [ "view-profile", "manage-account" ],
+      "authz-uma-api" : [ "uma_protection" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "24b96f90-2594-46d8-b22f-05f1dab75263",
+    "createdTimestamp" : 1549350148725,
+    "username" : "service-account-authz-uma-client",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "email" : "service-account-authz-uma-client@placeholder.org",
+    "serviceAccountClientId" : "authz-uma-client",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access" ],
+    "clientRoles" : {
+      "account" : [ "view-profile", "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "e16bd4ab-9816-46ba-a9ce-416c961a3bba",
+    "username" : "user001",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "user001",
+    "lastName" : "user001",
+    "email" : "user001@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "41mjtXcXPjLd6+9kuWP5Kf0PR3Uqz1aKBL79Epz4r6woKkXcdMV2Uc5S5+jHEKJm4WZcwczPLYVfFY6kmG3ACA==",
+      "salt" : "pbYGXgYgp5N6oOqILr2aUg==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1549268062945,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "ae9da267-7078-4c52-ae45-c1e43b9df293",
+    "username" : "user002",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "user002",
+    "lastName" : "user002",
+    "email" : "user002@test.example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "3hnvk+NYa5J/XRa9QuouTgZyJIjT6YmAruPKGnsgCHyChEb5VRuvSJfQ80mHj180ZWqBDuoH2pwPBNJT8KR7Pw==",
+      "salt" : "Hw0KtZpn4sUCR6KDRTjxNQ==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1549268063276,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/nri" ]
+  }, {
+    "id" : "99a14a7a-7338-40a2-8fe4-bfd5fd695e23",
+    "username" : "user003",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "user003",
+    "lastName" : "user003",
+    "email" : "user003@example.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "PRsoPgfj/rpwkweAhzqzuWnd6a5hCg8/Tv/TTJyKKbIM+I/BS7iqTbO/P2YacGrBSWy/hN1+fWNoL+1jODwqvw==",
+      "salt" : "GmN1T/zOGvxq2ypMZ56E2A==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1549268063477,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/nri/openstandia" ]
+  } ]
+}

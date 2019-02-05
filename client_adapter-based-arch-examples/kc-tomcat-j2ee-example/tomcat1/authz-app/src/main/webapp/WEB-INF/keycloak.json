@@ -1,0 +1,12 @@
+{
+  "realm": "demo-authz",
+  "auth-server-url": "https://sso.example.com/auth",
+  "ssl-required" : "external",
+  "disable-trust-manager": true,
+  "resource": "authz-app",
+  "credentials": {
+    "secret": "secret"
+  },
+  "policy-enforcer": {}
+}
+

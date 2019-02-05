@@ -1,0 +1,34 @@
+{
+  "realm": "demo-authz",
+  "auth-server-url": "https://sso.example.com/auth",
+  "ssl-required" : "external",
+  "disable-trust-manager": true,
+  "resource": "authz-uma-api",
+  "bearer-only" : true,
+  "credentials": {
+    "secret": "secret"
+  },
+  "policy-enforcer": {
+    "enforcement-mode": "PERMISSIVE",
+    "paths": [
+      {
+        "path" : "/api/items/{id}",
+        "methods" : [
+          {
+            "method": "GET",
+            "scopes" : ["item:view"]
+          },
+          {
+            "method": "DELETE",
+            "scopes" : ["item:delete"]
+          },
+          {
+            "method": "PUT",
+            "scopes" : ["item:update"]
+          }
+        ]
+      }
+    ]
+  }
+}
+

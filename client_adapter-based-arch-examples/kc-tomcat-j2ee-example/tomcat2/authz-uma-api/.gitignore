@@ -1,0 +1,8 @@
+# java
+target
+bin
+dependency-reduced-pom.xml
+.settings
+.project
+.classpath
+rebel.xml

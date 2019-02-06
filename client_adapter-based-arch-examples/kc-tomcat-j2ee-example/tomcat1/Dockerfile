@@ -20,6 +20,7 @@ RUN cd ${TOMCAT_HOME}/lib/ \
 
 # WARの配置
 #COPY --from=build-env /build/target/*.war ${TOMCAT_HOME}/webapps/
+RUN rm -rf ${TOMCAT_HOME}/webapps/*
 ADD ./authz-app/target/*.war ${TOMCAT_HOME}/webapps/
 
 # エントリーポイントの実行

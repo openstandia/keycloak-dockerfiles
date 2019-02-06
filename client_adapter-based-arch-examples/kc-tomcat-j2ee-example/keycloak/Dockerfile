@@ -17,3 +17,9 @@ ENTRYPOINT [ "/opt/jboss/tools/docker-entrypoint.sh" ]
 CMD ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/opt/jboss/import/", "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING" ]
 # Normal
 #CMD ["-b", "0.0.0.0"]
+
+# 証明書のインポート
+USER root
+ADD ./certs/example.crt /tmp/
+RUN keytool -import -alias example.com -file /tmp/example.crt -keystore /etc/pki/java/cacerts -storepass changeit -noprompt
+RUN rm -f /tmp/example.crt

@@ -88,6 +88,8 @@ services:
     extra_hosts:
       - host.docker.internal:172.18.0.1
       - sso.example.com:172.18.0.1
+      - uma.example.com:172.18.0.1
+      - authz.example.com:172.18.0.1
 
   # App1コンテナ設定
   app1:

@@ -14,7 +14,8 @@ public class ItemDisplayBean {
 	public boolean updatable;
 	public boolean deletable;
 
-	public ItemDisplayBean() {}
+	public ItemDisplayBean() {
+	}
 
 	public ItemDisplayBean(String name, String uri) {
 		this.name = name;
@@ -53,6 +54,5 @@ public class ItemDisplayBean {
 	public void setDeletable(boolean deletable) {
 		this.deletable = deletable;
 	}
-
 
 }

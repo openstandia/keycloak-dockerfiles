@@ -23,5 +23,8 @@ RUN cd ${TOMCAT_HOME}/lib/ \
 RUN rm -rf ${TOMCAT_HOME}/webapps/*
 ADD ./authz-app/target/*.war ${TOMCAT_HOME}/webapps/
 
+# HTTPS 対応
+COPY server.xml ${TOMCAT_HOME}/conf/
+
 # エントリーポイントの実行
 CMD ["catalina.sh", "run"]

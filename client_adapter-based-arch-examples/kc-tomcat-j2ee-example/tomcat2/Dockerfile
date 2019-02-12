@@ -28,5 +28,8 @@ RUN rm -rf ${TOMCAT_HOME}/webapps/*
 ADD ./authz-uma-api/target/*.war ${TOMCAT_HOME}/webapps/
 ADD ./authz-uma-client/target/*.war ${TOMCAT_HOME}/webapps/
 
+# HTTPS 対応
+COPY server.xml ${TOMCAT_HOME}/conf/
+
 # エントリーポイントの実行
 CMD ["catalina.sh", "run"]

@@ -4,7 +4,7 @@
 What is it?
 -----------
 
-This is an example using `J2EE Tomcat Adapter` in client adapter based architecture. 
+This is an example using `Tomcat Adapter` in client adapter based architecture.
 
 
 Requirements
@@ -20,10 +20,16 @@ You need to configure the host of the client.
 Example Build and Run
 -----------
 
-To build and run the sample, run the following docker-compose command:
+To build and run the sample, run the following mvn and docker-compose command:
 
    ````
-   docker-comporse up -d --build
+   # build war application
+   mvn clean package -f tomcat1/authz-app/pom.xml
+   mvn clean package -f tomcat2/authz-uma-api/pom.xml
+   mvn clean package -f tomcat2/authz-uma-client/pom.xml
+
+   # invoke docker container
+   docker-compose up -d --build
    ````
 
 
@@ -35,8 +41,8 @@ To confirm the sample, start the browser and use the following URL, userid and p
 |name|URL|userid/passsword|
 |:--|:--|:--|
 |Keycloak Admin Console|https://sso.example.com/auth/admin/|admin/password|
-|Securing Application1|https://authz.example.com/authz-app/|user001/password|
-|Securing Application2|https://uma.example.com/authz-uma-client/|user002/password|
+|Authz Application|https://authz.example.com/authz-app/|user001/password<br>user002/password<br>user003/password<br>admin001/password<br>admin002/password<br>admin003/password<br>|
+|UMA Application|https://uma.example.com/authz-uma-client/|user001/password<br>user002/password<br>user003/password|
 
 
 Example Stop
@@ -45,5 +51,5 @@ Example Stop
 To stop the sample, execute the following docker-compose command:
 
    ````
-   docker-comporse down
+   docker-compose down
    ````

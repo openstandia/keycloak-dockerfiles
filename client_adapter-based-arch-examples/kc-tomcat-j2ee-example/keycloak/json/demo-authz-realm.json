@@ -726,23 +726,6 @@
         "attributes" : { },
         "_id" : "29182938-39f6-4e4e-bb78-0a7fbc789c7c",
         "uris" : [ "/*" ]
-      }, {
-        "name" : "user001 Item",
-        "type" : "urn:authz-uma-api:resources:item",
-        "owner" : {
-          "name" : "user001"
-        },
-        "ownerManagedAccess" : true,
-        "attributes" : { },
-        "_id" : "d536a1ca-9709-444b-9e4f-6235ca7fcfb6",
-        "uris" : [ "/api/items/323481e2-d442-4939-b614-68a821c91771" ],
-        "scopes" : [ {
-          "name" : "item:update"
-        }, {
-          "name" : "item:view"
-        }, {
-          "name" : "item:delete"
-        } ]
       } ],
       "policies" : [ {
         "id" : "13d29771-27bb-4bae-9345-8a8157c3c1d5",

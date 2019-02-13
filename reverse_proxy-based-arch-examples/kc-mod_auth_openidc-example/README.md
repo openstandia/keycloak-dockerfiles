@@ -23,7 +23,7 @@ Example Build and Run
 To build and run the sample, run the following docker-compose command:
 
    ````
-   docker-comporse up -d --build
+   docker-compose up -d --build
    ````
 
 
@@ -55,5 +55,5 @@ Example Stop
 To stop the sample, execute the following docker-compose command:
 
    ````
-   docker-comporse down
+   docker-compose down
    ````

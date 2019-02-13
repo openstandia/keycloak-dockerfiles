@@ -4,6 +4,9 @@ FROM jboss/keycloak:4.8.3.Final
 # demo用初期設定ファイルの配置
 ADD ./json/*.json /opt/jboss/import/
 
+# p3pPolicy の日本語プロパティの修正
+RUN sed -i -e 's/p3pPolicy=.*/p3pPolicy="This is not a P3P policy!"/g' keycloak/themes/base/login/messages/messages_ja.properties
+
 # コンテナ実行時のリッスンポート
 EXPOSE 8080
 

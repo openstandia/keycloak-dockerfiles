@@ -24,8 +24,15 @@ RUN cd ${TOMCAT_HOME}/lib/ \
 # WARの配置
 #COPY --from=build-env /build1/target/*.war ${TOMCAT_HOME}/webapps/
 #COPY --from=build-env /build2/target/*.war ${TOMCAT_HOME}/webapps/
+RUN rm -rf ${TOMCAT_HOME}/webapps/*
 ADD ./authz-uma-api/target/*.war ${TOMCAT_HOME}/webapps/
 ADD ./authz-uma-client/target/*.war ${TOMCAT_HOME}/webapps/
 
+# HTTPS 対応
+COPY server.xml ${TOMCAT_HOME}/conf/
+
+# Keycloak ssl 接続チェック対応
+COPY wait-for-kc.sh /wait-for-kc.sh
+
 # エントリーポイントの実行
-CMD ["catalina.sh", "run"]
+#CMD ["catalina.sh", "run"]

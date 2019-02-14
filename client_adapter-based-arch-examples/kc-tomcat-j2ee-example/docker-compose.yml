@@ -112,7 +112,7 @@ services:
       - default
     extra_hosts:
       - sso.example.com:172.18.0.1
-    command: /wait-for-kc.sh
+    command: bash /wait-for-kc.sh
 
   # App2コンテナ設定
   app2:
@@ -135,4 +135,4 @@ services:
       - default
     extra_hosts:
       - sso.example.com:172.18.0.1
-    command: /wait-for-kc.sh
+    command: bash /wait-for-kc.sh

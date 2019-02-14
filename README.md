@@ -10,6 +10,13 @@ This is a set of Docker Compose files related to Keycloak.
  - [Keycloak & keycloak-proxy](./reverse_proxy-based-arch-examples/kc-keycloak-proxy-example) example -> comming soon.
 
 
+Example of `client_adapter-based` architecture
+-----------
+
+This is a set of Docker Compose files related to Keycloak.
+
+- [Keycloak & client adapter(tomcat)](./client_adapter-based-arch-examples/kc-tomcat-j2ee-example/) example
+
 License
 -----------
 

@@ -44,7 +44,7 @@ public class Item {
 	public static final String URI_PREFIX = "/api/items/";
 
 	public static final String SCOPE_ITEM_UPDATE = "item:update";
-	public static final String SCOPE_ITEM_VIEW = "item:view";
+	public static final String SCOPE_ITEM_VIEW   = "item:view";
 	public static final String SCOPE_ITEM_DELETE = "item:delete";
 
 	@Context
@@ -60,16 +60,16 @@ public class Item {
 		String[] resourceIds = getAuthzClient().protection().resource().findAll();
 		Map<String, Permission> permissionMap = getPermissionMap();
 
-		List<ItemDisplayBean> resourceList = new ArrayList<ItemDisplayBean>();
+		List<ItemDisplayBean> resourceList = new ArrayList<>();
 		for (String rid : resourceIds) {
 
 			ResourceRepresentation resource = getAuthzClient().protection().resource().findById(rid);
 
 			if (resource.getOwnerManagedAccess()) {
 
-				Iterator<String> it = resource.getUris().iterator();
-				while (it.hasNext()) {
-					ItemDisplayBean itemDisplayBean = new ItemDisplayBean(resource.getName(), it.next());
+				Set<String> uris = resource.getUris();
+				for (String url : uris) {
+					ItemDisplayBean itemDisplayBean = new ItemDisplayBean(resource.getName(), url);
 
 					// リソースのオーナーかどうかチェック
 					itemDisplayBean
@@ -104,7 +104,7 @@ public class Item {
 		String subject = servletRequest.getUserPrincipal().getName();
 
 		// (1) リソースで利用できる全てのスコープを HashSet に追加
-		HashSet<ScopeRepresentation> scopes = new HashSet<ScopeRepresentation>();
+		HashSet<ScopeRepresentation> scopes = new HashSet<>();
 		scopes.add(new ScopeRepresentation(SCOPE_ITEM_VIEW));
 		scopes.add(new ScopeRepresentation(SCOPE_ITEM_UPDATE));
 		scopes.add(new ScopeRepresentation(SCOPE_ITEM_DELETE));
@@ -113,13 +113,13 @@ public class Item {
 		String uri = URI_PREFIX + uuid;
 		String resourceName = name + " Item";
 		ResourceRepresentation newResource = new ResourceRepresentation(resourceName, scopes, uri,
-				"urn:authz-uma-api:resources:item");
+						"urn:authz-uma-api:resources:item");
 		newResource.setOwner(subject);
 		newResource.setOwnerManagedAccess(true);
 
 		// (3) 既に同一のリソースが作成されていないかチェック
 		ResourceRepresentation resource = getResourceRepresentationByName(resourceName, subject);
-		if (resource != null) {
+		if ( resource != null) {
 			return "'" + resourceName + "' は既に作成済みです！";
 		}
 
@@ -161,7 +161,7 @@ public class Item {
 		List<ResourceRepresentation> search = getResourceRepresentations(id);
 
 		// (2) 既にリソースが削除されていないかチェック
-		if (search.size() == 0) {
+		if ( search.size() == 0 ) {
 			return "このリソースは既に削除されています！";
 		}
 
@@ -184,17 +184,13 @@ public class Item {
 	private List<ResourceRepresentation> getResourceRepresentations(String id) {
 
 		// リソース検索(Authorization Client API 経由)
-		List<ResourceRepresentation> search = getAuthzClient().protection().resource().findByUri(URI_PREFIX + id);
-
-		return search;
+		return getAuthzClient().protection().resource().findByUri(URI_PREFIX + id);
 	}
 
 	private ResourceRepresentation getResourceRepresentationByName(String name, String ownerId) {
 
 		// リソース検索(Authorization Client API 経由)
-		ResourceRepresentation resource = getAuthzClient().protection().resource().findByName(name, ownerId);
-
-		return resource;
+		return getAuthzClient().protection().resource().findByName(name, ownerId);
 	}
 
 	@GET
@@ -215,11 +211,11 @@ public class Item {
 			// (3) 認可リクエスト送信(Authorization Client API 経由)
 			getAuthzClient().authorization(getKeycloakSecurityContext().getTokenString()).authorize(authorizationReq);
 			requested = true;
-		} catch (AuthorizationDeniedException e) {
+		} catch(AuthorizationDeniedException e) {
 			Throwable t = e.getCause();
 			if (t instanceof HttpResponseException) {
 				// (4) 403 エラーであれば、アクセス権申請は成功
-				if (((HttpResponseException) t).getStatusCode() == 403) {
+				if (((HttpResponseException)t).getStatusCode() == 403) {
 					requested = true;
 				}
 			}
@@ -253,7 +249,7 @@ public class Item {
 
 	private Map<String, Permission> getPermissionMap() {
 
-		Map<String, Permission> permissionMap = new HashMap<String, Permission>();
+		Map<String, Permission> permissionMap = new HashMap<>();
 		// RPT のうちアクセス権のリストのみ JSON で送信
 		for (Permission permission : introspectRPT()) {
 			permissionMap.put(permission.getResourceName(), permission);

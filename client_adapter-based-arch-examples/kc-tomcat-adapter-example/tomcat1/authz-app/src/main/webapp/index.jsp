@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
-  response.setHeader("Expires", "-1");
-  response.setHeader("Pragma","no-cache");
-  response.setHeader("Cache-Control","no-cache");
+	response.setHeader("Expires", "-1");
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Cache-Control","no-cache");
 %>
 
 <%@ page import="org.keycloak.KeycloakSecurityContext" %>
 <%@ page import="org.keycloak.adapters.RefreshableKeycloakSecurityContext" %>
-<%@ page import="org.keycloak.authorization.client.ClientAuthorizationContext" %>
 <%@ page import="org.keycloak.representations.IDToken" %>
 
 <html>
@@ -70,12 +69,12 @@
 		<tr>
 			<td>/authz-app/</td>
 			<td>・認証済み</td>
-			<td><a href="/authz-app/"  class="btn btn-primary btn-default active" role="button">view</a></td>
+			<td><a href="/authz-app/" class="btn btn-primary btn-default active" role="button">view</a></td>
 		</tr>
 		<tr>
 			<td>/authz-app/role/admin/</td>
 			<td>・"admin" ロールのみ</td>
-			<td><a href="/authz-app/role/admin/"  class="btn btn-primary btn-default active" role="button">view</a></td>
+			<td><a href="/authz-app/role/admin/" class="btn btn-primary btn-default active" role="button">view</a></td>
 		</tr>
 		<tr>
 			<td>/authz-app/user/user001/</td>
@@ -85,7 +84,7 @@
 		<tr>
 			<td>/authz-app/group/openstandia/</td>
 			<td>・"openstandia" グループのみ</td>
-			<td><a href="/authz-app/group/openstandia/""  class="btn btn-primary btn-default active" role="button">view</a></td>
+			<td><a href="/authz-app/group/openstandia/" class="btn btn-primary btn-default active" role="button">view</a></td>
 		</tr>
 		<tr>
 			<td>/authz-app/attr/test/</td>
@@ -95,7 +94,7 @@
 		<tr>
 			<td>/authz-app/time/lunch/</td>
 			<td>・ランチタイム(12:00 - 12:59)のみ</td>
-			<td><a href="/authz-app/time/lunch/""  class="btn btn-primary btn-default active" role="button">view</a></td>
+			<td><a href="/authz-app/time/lunch/" class="btn btn-primary btn-default active" role="button">view</a></td>
 		</tr>
 	</table>
 	</div>

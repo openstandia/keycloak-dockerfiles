@@ -767,16 +767,6 @@
           "defaultResourceType" : "urn:authz-uma-api :resources:default",
           "applyPolicies" : "[\"Default Policy\"]"
         }
-      } ],
-      "scopes" : [ {
-        "id" : "12c49c97-67d8-4c73-9e33-7991049e58b3",
-        "name" : "item:view"
-      }, {
-        "id" : "3bb20526-d551-4d96-bd35-9c2f13cd3cfd",
-        "name" : "item:delete"
-      }, {
-        "id" : "b9699697-1f19-46ad-9798-e1f420ce8b6e",
-        "name" : "item:update"
       } ]
     }
   }, {

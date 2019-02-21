@@ -35,6 +35,10 @@ services:
       - ./lb/certs:/etc/nginx/certs
     networks:
       default:
+        aliases:
+          - sso.example.com
+          - uma.example.com
+          - authz.example.com
 
   # DB(MySQL)コンテナ設定
   db:
@@ -85,11 +89,6 @@ services:
       PROXY_ADDRESS_FORWARDING: "true"
     networks:
       - default
-    extra_hosts:
-      - host.docker.internal:172.18.0.1
-      - sso.example.com:172.18.0.1
-      - uma.example.com:172.18.0.1
-      - authz.example.com:172.18.0.1
 
   # App1コンテナ設定
   app1:
@@ -110,8 +109,6 @@ services:
       CERT_NAME: example
     networks:
       - default
-    extra_hosts:
-      - sso.example.com:172.18.0.1
     command: bash /wait-for-kc.sh
 
   # App2コンテナ設定
@@ -133,6 +130,4 @@ services:
       CERT_NAME: example
     networks:
       - default
-    extra_hosts:
-      - sso.example.com:172.18.0.1
     command: bash /wait-for-kc.sh

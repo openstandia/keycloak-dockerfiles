@@ -77,7 +77,7 @@ public class Item {
 
 					Permission permission = permissionMap.get(resource.getName());
 					if (permission != null) {
-						// 当該リソースに対して、各スコープのアクセス権があるかチェック
+						// 当該リソースに対して、各スコープのパーミッションがあるかチェック
 						itemDisplayBean.setViewable(permission.getScopes().contains(SCOPE_ITEM_VIEW));
 						itemDisplayBean.setUpdatable(permission.getScopes().contains(SCOPE_ITEM_UPDATE));
 						itemDisplayBean.setDeletable(permission.getScopes().contains(SCOPE_ITEM_DELETE));
@@ -198,14 +198,14 @@ public class Item {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String requestScope(@QueryParam("id") String id, @QueryParam("scope") String scope) {
 
-		// (1) アクセス権要求チケット取得(Protection API 経由)
+		// (1) パーミッション・チケット取得(Protection API 経由)
 		ResourceRepresentation resource = getResourceRepresentation(id);
 		PermissionRequest permissionReq = new PermissionRequest(resource.getId(), "item:" + scope);
 		PermissionResponse permissionRes = getAuthzClient().protection().permission().create(permissionReq);
 
 		boolean requested = false;
 
-		// (2) アクセス権チケットから認可リクエストの作成
+		// (2) パーミッション・チケットから認可リクエストの作成
 		AuthorizationRequest authorizationReq = new AuthorizationRequest(permissionRes.getTicket());
 		try {
 			// (3) 認可リクエスト送信(Authorization Client API 経由)
@@ -214,7 +214,7 @@ public class Item {
 		} catch(AuthorizationDeniedException e) {
 			Throwable t = e.getCause();
 			if (t instanceof HttpResponseException) {
-				// (4) 403 エラーであれば、アクセス権申請は成功
+				// (4) 403 エラーであれば、パーミッション申請は成功
 				if (((HttpResponseException)t).getStatusCode() == 403) {
 					requested = true;
 				}
@@ -250,7 +250,7 @@ public class Item {
 	private Map<String, Permission> getPermissionMap() {
 
 		Map<String, Permission> permissionMap = new HashMap<>();
-		// RPT のうちアクセス権のリストのみ JSON で送信
+		// RPT のうちパーミッションのリストのみ JSON で送信
 		for (Permission permission : introspectRPT()) {
 			permissionMap.put(permission.getResourceName(), permission);
 		}

@@ -39,6 +39,8 @@ services:
           - sso.example.com
           - uma.example.com
           - authz.example.com
+    environment:
+      TZ: "Asia/Tokyo"
 
   # DB(MySQL)コンテナ設定
   db:
@@ -58,6 +60,7 @@ services:
       MYSQL_DATABASE: keycloakdb
       MYSQL_USER: keycloak
       MYSQL_PASSWORD: password
+      TZ: "Asia/Tokyo"
     networks:
       - default
 
@@ -87,6 +90,7 @@ services:
 #      KEYCLOAK_USER: admin
 #      KEYCLOAK_PASSWORD: password
       PROXY_ADDRESS_FORWARDING: "true"
+      TZ: "Asia/Tokyo"
     networks:
       - default
 
@@ -107,6 +111,7 @@ services:
       VIRTUAL_HOST: "authz.example.com"
       VIRTUAL_PORT: "8081"
       CERT_NAME: example
+      TZ: "Asia/Tokyo"
     networks:
       - default
     command: bash /wait-for-kc.sh
@@ -128,6 +133,7 @@ services:
       VIRTUAL_HOST: "uma.example.com"
       VIRTUAL_PORT: "8082"
       CERT_NAME: example
+      TZ: "Asia/Tokyo"
     networks:
       - default
     command: bash /wait-for-kc.sh

@@ -105,7 +105,7 @@ function displayResources() {
 		dataType: 'json'
 	}).done(function(resources){
 		$('.resourcesTable').text("");
-		var tableHtml = "<table  class='table table-striped'><tr><th>オーナー</th><th>リソース名</th><th>API アクセスチェック</th><th>UMA 操作<br>(アクセス権申請)</th></tr>";
+		var tableHtml = "<table  class='table table-striped'><tr><th>オーナー</th><th>リソース名</th><th>API アクセスチェック</th><th>UMA 操作<br>(パーミッション申請)</th></tr>";
 		for (var i in resources) {
 			tableHtml += "<tr>";
 				tableHtml += "<td align='center'>" + (resources[i].isOwner ? "○" : "") + "</td>";

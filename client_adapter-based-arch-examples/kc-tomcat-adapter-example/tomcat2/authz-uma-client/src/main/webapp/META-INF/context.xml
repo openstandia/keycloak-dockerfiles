@@ -1,0 +1,4 @@
+<Context path="/authz-uma-client">
+    <Valve className="org.keycloak.adapters.tomcat.KeycloakAuthenticatorValve"/>
+</Context>
+

@@ -1,21 +1,22 @@
 # keycloak-dockerfiles
 Dockerfiles that can be used to build Docker images with Keycloak project.
 
-Example of `reverse_proxy-based` architecture
+Example of reverse proxy based architecture
 -----------
 
-This is a set of Docker Compose files related to Keycloak.
+This is a set of Docker Compose files related to Keycloak,
+ including an example using mod_auth_openidc in reverse proxy based architecture.
 
  - [Keycloak & mod_auth_openidc](./reverse_proxy-based-arch-examples/kc-mod_auth_openidc-example) example
- - [Keycloak & keycloak-proxy](./reverse_proxy-based-arch-examples/kc-keycloak-proxy-example) example -> comming soon.
+ - [Keycloak & keycloak-proxy](./reverse_proxy-based-arch-examples/kc-keycloak-proxy-example) example -> coming soon.
 
 
-Example of `client_adapter-based` architecture
+Example of client adapter based architecture
 -----------
 
-This is a set of Docker Compose files related to Keycloak.
+This is a set of Docker Compose files related to Keycloak, including an example using Tomcat Adapter in client adapter based architecture.
 
-- [Keycloak & client adapter(tomcat)](./client_adapter-based-arch-examples/kc-tomcat-adapter-example/) example
+- [Keycloak & client adapter(Tomcat)](./client_adapter-based-arch-examples/kc-tomcat-adapter-example/) example
 
 License
 -----------

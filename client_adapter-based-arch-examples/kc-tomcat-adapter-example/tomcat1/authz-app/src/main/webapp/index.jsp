@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%
-	response.setHeader("Expires", "-1");
-	response.setHeader("Pragma","no-cache");
-	response.setHeader("Cache-Control","no-cache");
-%>
-
 <%@ page import="org.keycloak.KeycloakSecurityContext" %>
 <%@ page import="org.keycloak.adapters.RefreshableKeycloakSecurityContext" %>
 <%@ page import="org.keycloak.representations.IDToken" %>
@@ -23,6 +17,10 @@
 </head>
 
 <%
+	response.setHeader("Expires", "-1");
+	response.setHeader("Pragma","no-cache");
+	response.setHeader("Cache-Control","no-cache");
+
 	RefreshableKeycloakSecurityContext keycloakContext = (RefreshableKeycloakSecurityContext)request.getAttribute(KeycloakSecurityContext.class.getName());
 	IDToken idToken = keycloakContext.getIdToken();
 
@@ -33,7 +31,7 @@
 
 <body>
 <div class="container-fluid">
-	<h3>ログインユーザー情報</h3>
+	<h3>ログインユーザ情報</h3>
 	<div class="container-fluid">
 	<table class="table table-striped">
 		<tr>

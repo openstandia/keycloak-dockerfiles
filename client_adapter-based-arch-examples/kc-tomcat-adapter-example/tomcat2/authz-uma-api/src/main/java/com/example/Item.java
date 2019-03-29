@@ -47,6 +47,8 @@ public class Item {
 	public static final String SCOPE_ITEM_VIEW   = "item:view";
 	public static final String SCOPE_ITEM_DELETE = "item:delete";
 
+	private static final String MESSAGE_RESOURCE_NOT_EXIST = "リソース（'%s）' が存在しません！";
+
 	@Context
 	private HttpServletRequest servletRequest;
 
@@ -136,7 +138,9 @@ public class Item {
 	public String viewResource(@PathParam("id") String id) {
 
 		ResourceRepresentation resource = getResourceRepresentation(id);
-
+		if (resource == null) {
+			return String.format(MESSAGE_RESOURCE_NOT_EXIST, id);
+		}
 		return "'" + resource.getName() + "' が参照されました！";
 
 	}
@@ -147,7 +151,9 @@ public class Item {
 	public String updateResource(@PathParam("id") String id) {
 
 		ResourceRepresentation resource = getResourceRepresentation(id);
-
+		if (resource == null) {
+			return String.format(MESSAGE_RESOURCE_NOT_EXIST, id);
+		}
 		return "'" + resource.getName() + "' が更新されました！";
 
 	}
@@ -161,7 +167,7 @@ public class Item {
 		List<ResourceRepresentation> search = getResourceRepresentations(id);
 
 		// (2) 既にリソースが削除されていないかチェック
-		if ( search.size() == 0 ) {
+		if (search.isEmpty()) {
 			return "このリソースは既に削除されています！";
 		}
 
@@ -174,10 +180,11 @@ public class Item {
 
 	private ResourceRepresentation getResourceRepresentation(String id) {
 
-		if (getResourceRepresentations(id).size() == 0) {
+		List<ResourceRepresentation> search = getResourceRepresentations(id);
+		if (search.isEmpty()) {
 			return null;
 		}
-		return getResourceRepresentations(id).get(0);
+		return search.get(0);
 
 	}
 
@@ -200,6 +207,9 @@ public class Item {
 
 		// (1) パーミッション・チケット取得(Protection API 経由)
 		ResourceRepresentation resource = getResourceRepresentation(id);
+		if (resource == null) {
+			return String.format(MESSAGE_RESOURCE_NOT_EXIST, id);
+		}
 		PermissionRequest permissionReq = new PermissionRequest(resource.getId(), "item:" + scope);
 		PermissionResponse permissionRes = getAuthzClient().protection().permission().create(permissionReq);
 
@@ -213,11 +223,9 @@ public class Item {
 			requested = true;
 		} catch(AuthorizationDeniedException e) {
 			Throwable t = e.getCause();
-			if (t instanceof HttpResponseException) {
+			if (t instanceof HttpResponseException && ((HttpResponseException)t).getStatusCode() == 403) {
 				// (4) 403 エラーであれば、パーミッション申請は成功
-				if (((HttpResponseException)t).getStatusCode() == 403) {
-					requested = true;
-				}
+				requested = true;
 			}
 		}
 

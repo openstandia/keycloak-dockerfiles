@@ -1,4 +1,4 @@
-`keycloak & client adapter (tomcat)` example
+`Keycloak & client adapter (Tomcat)` example
 ======================
 
 What is it?
@@ -10,17 +10,17 @@ This is an example using `Tomcat Adapter` in client adapter based architecture.
 Requirements
 -----------
 
-You need to configure the host of the client.
+You need to edit the hosts file on your local machine to access to this Docker host:
 
    ````
    XXX.XXX.XXX.XXX	sso.example.com authz.example.com uma.example.com
    ````
 
 
-Example Build and Run
+Build and Run
 -----------
 
-To build and run the sample, run the following mvn and docker-compose command:
+To build and run the example, execute the following mvn and docker-compose command:
 
    ````
    # build war application
@@ -32,11 +32,7 @@ To build and run the sample, run the following mvn and docker-compose command:
    docker-compose up -d --build
    ````
 
-
-Example Confirm
------------
-
-To confirm the sample, start the browser and use the following URL, userid and password to access it.
+After the startup, you can access the following applications:
 
 |name|URL|userid/passsword|
 |:--|:--|:--|
@@ -45,10 +41,10 @@ To confirm the sample, start the browser and use the following URL, userid and p
 |UMA Application|https://uma.example.com/authz-uma-client/|user001/password<br>user002/password<br>user003/password|
 
 
-Example Stop
+Stop
 -----------
 
-To stop the sample, execute the following docker-compose command:
+To stop the example, execute the following docker-compose command:
 
    ````
    docker-compose down

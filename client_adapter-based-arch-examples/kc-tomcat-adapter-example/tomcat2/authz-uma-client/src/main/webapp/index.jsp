@@ -2,7 +2,6 @@
 
 <%@ page import="org.keycloak.KeycloakSecurityContext" %>
 <%@ page import="org.keycloak.adapters.RefreshableKeycloakSecurityContext" %>
-<%@ page import="org.keycloak.authorization.client.ClientAuthorizationContext" %>
 <%@ page import="org.keycloak.representations.IDToken" %>
 
 <html>

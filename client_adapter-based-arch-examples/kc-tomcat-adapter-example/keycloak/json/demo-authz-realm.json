@@ -640,7 +640,7 @@
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "secret",
-    "redirectUris" : [ "/authz-uma-api/" ],
+    "redirectUris" : [ "https://uma.example.com/authz-uma-api/" ],
     "webOrigins" : [ "https://uma.example.com" ],
     "notBefore" : 0,
     "bearerOnly" : false,

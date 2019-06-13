@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%@ page import="org.keycloak.KeycloakSecurityContext" %>
-<%@ page import="org.keycloak.adapters.RefreshableKeycloakSecurityContext" %>
-<%@ page import="org.keycloak.representations.IDToken" %>
+<%
+  response.setHeader("Expires", "-1");
+  response.setHeader("Pragma","no-cache");
+  response.setHeader("Cache-Control","no-cache");
+%>
 
 <html>
 
@@ -11,55 +13,46 @@
 
 <link rel="stylesheet" href="css/bootstrap.min.css" >
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<script src="https://sso.example.com/auth/js/keycloak.js"></script>
+<script src="https://sso.example.com/auth/js/keycloak-authz.js"></script>
 <script src="js/jquery-3.3.1.min.js" type="text/javascript" ></script>
+<script src="js/jwt-decode.min.js" type="text/javascript" ></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/uma-client.js"type="text/javascript" ></script>
 
+
 </head>
 
-<%
-	response.setHeader("Expires", "-1");
-	response.setHeader("Pragma","no-cache");
-	response.setHeader("Cache-Control","no-cache");
-
-	RefreshableKeycloakSecurityContext keycloakContext = (RefreshableKeycloakSecurityContext)request.getAttribute(KeycloakSecurityContext.class.getName());
-	IDToken idToken = keycloakContext.getIdToken();
-
-	String authServerBaseUrl = keycloakContext.getDeployment().getAuthServerBaseUrl();
-	String realm = keycloakContext.getRealm();
-	String logoutEndpoint = authServerBaseUrl + "/realms/" + realm + "/protocol/openid-connect/logout";
-%>
-
-<body onLoad="displayResources()">
+<body>
 <div class="container-fluid">
 
-	<h3>ログインユーザ情報</h3>
+	<h3>ログインユーザー情報</h3>
 	<div class="container-fluid">
 	<table class="table table-striped">
 		<tr>
 			<th align="left">内部ID</th>
-			<td><%=idToken.getSubject()%></td>
+			<td><data id="subject"></data></td>
 		</tr>
 		<tr>
 			<th align="left">ユーザID</th>
-			<td><%=idToken.getPreferredUsername()%></td>
+			<td><data id="username"></data></td>
 		</tr>
 		<tr>
 			<th align="left">メールアドレス</th>
-			<td><%=idToken.getEmail()%></td>
+			<td><data id="email"></data></td>
 		</tr>
 	</table>
 	</div>
 
 	<h3>Keycloak 操作</h3>
 	<div class="container-fluid">
-		<a href="<%=authServerBaseUrl%>/realms/<%=realm%>/account/resource?referrer=authz-uma-client&referrer_uri=https%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F"  class="btn btn-primary btn-default active" role="button">マイリソース</a>
-		<a href="<%=logoutEndpoint%>?redirect_uri=https%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F" class="btn btn-default active" role="button">ログアウト</a>
+		<a href="javascript: location.href=keycloak.createAccountUrl().replace('account','account/resource');"  class="btn btn-primary btn-default active" role="button">マイリソース</a>
+		<a href="javascript: keycloak.logout();" class="btn btn-default active" role="button">ログアウト</a>
 	</div>
 
 	<h3>UMA 操作</h3>
 	<div class="container-fluid">
-		<a href="#" onClick="submit('?name=<%=idToken.getPreferredUsername()%>', 'POST')" class="btn btn-primary btn-default active" role="button">'<%=idToken.getPreferredUsername()%> Item' の作成</a>
+		<a href="#" onClick="create()" class="btn btn-primary btn-default active" role="button">'<data id="itemName"></data>' の作成</a>
 		<a href="#" onClick="introspectRPT()" class="btn btn-primary btn-default active" role="button">現在のアクセス権の確認</a>
 	</div>
 

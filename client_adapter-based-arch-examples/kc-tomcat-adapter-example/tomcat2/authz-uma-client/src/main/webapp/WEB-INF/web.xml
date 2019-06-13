@@ -3,20 +3,4 @@
      see implementation details http://jersey.java.net/nonav/documentation/latest/jax-rs.html -->
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Protected Area</web-resource-name>
-      <url-pattern>/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>*</role-name>
-    </auth-constraint>
-  </security-constraint>
-  <login-config>
-    <auth-method>BASIC</auth-method>
-    <realm-name>this is ignored currently</realm-name>
-  </login-config>
-  <security-role>
-    <role-name>*</role-name>
-  </security-role>
 </web-app>

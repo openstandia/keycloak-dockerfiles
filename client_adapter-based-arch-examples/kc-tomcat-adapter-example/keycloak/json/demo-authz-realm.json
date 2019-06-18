@@ -779,7 +779,7 @@
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "secret",
-    "redirectUris" : [ "https://uma.example.com/authz-uma-client/" ],
+    "redirectUris" : [ "https://uma.example.com/authz-uma-client/*" ],
     "webOrigins" : [ "https://uma.example.com" ],
     "notBefore" : 0,
     "bearerOnly" : false,

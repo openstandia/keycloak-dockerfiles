@@ -38,7 +38,8 @@ After the startup, you can access the following applications:
 |:--|:--|:--|
 |Keycloak Admin Console|https://sso.example.com/auth/admin/|admin/password|
 |Authz Application|https://authz.example.com/authz-app/|user001/password<br>user002/password<br>user003/password<br>admin001/password<br>admin002/password<br>admin003/password<br>|
-|UMA Application|https://uma.example.com/authz-uma-client/|user001/password<br>user002/password<br>user003/password|
+|UMA API|https://uma.example.com/authz-uma-api/|bearer access only|
+|UMA Client|https://uma.example.com/authz-uma-client/|user001/password<br>user002/password<br>user003/password|
 
 
 Stop

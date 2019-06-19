@@ -16,13 +16,14 @@ keycloak.init({ onLoad: 'login-required' }).success(function() {
 	keycloak.loadUserProfile().success(function() {
 
 		// 画面ヘッダーの値設定
-		document.getElementById('subject').innerText = keycloak.subject;
 		document.getElementById('email').innerText = keycloak.profile.email;
 		document.getElementById('username').innerText = keycloak.profile.username;
-		document.getElementById('itemName').innerText = keycloak.profile.username + ' Item';
 
 		// アクセストークンの取得
 		accessToken = keycloak.token;
+
+		// ログイン完了後に画面表示
+		document.body.style.visibility='visible';
 
 		// リソース表示
 		displayResources();
@@ -36,7 +37,7 @@ keycloak.init({ onLoad: 'login-required' }).success(function() {
 
 
 // アクセストークン期限切れ時の処理
-keycloak.onTokenExpired = function() { 
+keycloak.onTokenExpired = function() {
 	console.log('token expired');
 
 	keycloak.updateToken(5).success(function(refreshed) {
@@ -55,8 +56,29 @@ keycloak.onTokenExpired = function() {
 }
 
 function create() {
-	id = "?name=" + keycloak.profile.username;
+	var name = document.getElementById("name").value;
+	var memo = document.getElementById("memo").value;
+
+	if (!name) {
+		alert("リソース名を入力してください。");
+		return;
+	}
+
+	id = "?name=" + encodeURI(name) + "&memo=" + encodeURI(memo);
 	submit(id, "POST");
+}
+
+function update() {
+
+	if (document.getElementById("updateButton").disabled) {
+		return;
+	}
+
+	var id = document.getElementById("detailId").value;
+	var memo = document.getElementById("detailMemo").value;
+
+	id = id + "?detailMemo=" + encodeURI(memo);
+	submit(id, "PUT");
 }
 
 function submit(id, method, token, submitRequest) {
@@ -77,11 +99,32 @@ function submit(id, method, token, submitRequest) {
 		statusCode: {
 			200: function(responseText, statusText, response) {
 				displayResources();
+				var item = JSON.parse(responseText);
+
 				$(".resultConsole").text("＜HTTPリクエスト＞\n");
 				$(".resultConsole").append(method + " " + requestUri + "\n\n");
 				$(".resultConsole").append("＜HTTPレスポンス＞\n");
 				$(".resultConsole").append("ステータス : " + response.status + " " + statusText + "\n");
-				$(".resultConsole").append("API 応答   : " + responseText);
+				$(".resultConsole").append("API 応答   : \n" + JSON.stringify(item, null, 4));
+
+				if (method == 'GET') {
+					document.getElementById("detailId").value = item.id;
+					document.getElementById("detailName").value = item.name;
+					document.getElementById("detailMemo").value = item.memo;
+					document.getElementById("updateButton").removeAttribute("disabled");
+				}
+
+			},
+			201: function(responseText, statusText, response) {
+				displayResources();
+				var item = JSON.parse(responseText);
+
+				$(".resultConsole").text("＜HTTPリクエスト＞\n");
+				$(".resultConsole").append(method + " " + requestUri + "\n\n");
+				$(".resultConsole").append("＜HTTPレスポンス＞\n");
+				$(".resultConsole").append("ステータス : " + response.status + " " + statusText + "\n");
+				$(".resultConsole").append("API 応答   : \n" + JSON.stringify(item, null, 4));
+
 			},
 			401: function(response, statusText) {
 				displayResources();
@@ -118,6 +161,7 @@ function submit(id, method, token, submitRequest) {
 
 						// パーミッション申請でなければ
 						if (!submitRequest) {
+
 							// 取得した RPT を使って当初のリクエストをリトライ
 							submit(id, method, rpt);
 						}
@@ -134,6 +178,7 @@ function submit(id, method, token, submitRequest) {
 					});
 
 				}
+
 			}
 		}
 	}).fail(function(response){
@@ -144,6 +189,21 @@ function submit(id, method, token, submitRequest) {
 			$(".resultConsole").append("＜HTTPレスポンス＞\n");
 			$(".resultConsole").append("ステータス : " + response.status + " " + response.statusText + "\n");
 			$(".resultConsole").append("パーミッション申請 : " + method + " 権限を申請しました。");
+
+		} else if (response.status == 409) {
+			displayResources();
+			var item = JSON.parse(response.responseText);
+
+			$(".resultConsole").text("＜HTTPリクエスト＞\n");
+			$(".resultConsole").append(method + " " + requestUri + "\n\n");
+			$(".resultConsole").append("＜HTTPレスポンス＞\n");
+			$(".resultConsole").append("ステータス : " + response.status + " " + response.statusText + "\n");
+			$(".resultConsole").append("API 応答   : \n" + JSON.stringify(item, null, 4));
+
+			document.getElementById("detailId").value = "";
+			document.getElementById("detailName").value = "";
+			document.getElementById("detailMemo").value = "";
+
 		} else {
 			$('.resultConsole').text("リクエスト失敗！");
 		}
@@ -158,7 +218,7 @@ function requestScope(id, method) {
 
 }
 
-function introspectRPT() {
+function getEntitlement() {
 
 	displayResources();
 
@@ -192,20 +252,19 @@ function displayResources() {
 				tableHtml += "<td align='center'>" + (resources[i].isOwner ? "○" : "") + "</td>";
 				tableHtml += "<td>"+ resources[i].name+ "</td>";
 				tableHtml += "<td>";
-					tableHtml += " <a href='#' onClick=\"submit('" + resources[i].subject + "', 'GET')\" class='btn btn-primary btn-default active' role='button'>view</a>";
-					tableHtml += " <a href='#' onClick=\"submit('" + resources[i].subject + "', 'PUT')\" class='btn btn-primary btn-default active' role='button'>update</a>";
-					tableHtml += " <a href='#' onClick=\"submit('" + resources[i].subject + "', 'DELETE')\" class='btn btn-primary btn-default active' role='button'>delete</a>";
+					tableHtml += " <a href=\"modifyItem.jsp?id=" + resources[i].subject + "\" class='btn btn-primary btn-default active' role='button'>参照</a>";
+					tableHtml += " <a href='#' onClick=\"submit('" + resources[i].subject + "', 'DELETE')\" class='btn btn-primary btn-default active' role='button'>削除</a>";
 				tableHtml += "</td>";
 				tableHtml += "<td>";
 				if ( !resources[i].isOwner ) {
 					if (!resources[i].viewable) {
-						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject + "', 'GET')\" class='btn btn-primary btn-default active' role='button'> view </a>";
+						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject + "', 'GET')\" class='btn btn-primary btn-default active' role='button'>参照権限申請</a>";
 					}
 					if (!resources[i].updatable) {
-						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject + "', 'PUT')\" class='btn btn-primary btn-default active' role='button'>update</a>";
+						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject + "', 'PUT')\" class='btn btn-primary btn-default active' role='button'>更新権限申請</a>";
 					}
 					if (!resources[i].deletable) {
-						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject + "', 'DELETE')\" class='btn btn-primary btn-default active' role='button'>delete</a>";
+						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject + "', 'DELETE')\" class='btn btn-primary btn-default active' role='button'>削除権限申請</a>";
 					}
 				}
 				tableHtml += "</td>";
@@ -219,3 +278,4 @@ function displayResources() {
 		window.location.reload();
 	});
 }
+

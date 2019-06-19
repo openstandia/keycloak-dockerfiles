@@ -9,7 +9,7 @@
 <html>
 
 <head>
-<title>Authz UMA Client</title>
+<title>Authz UMA Client - リソース作成</title>
 
 <link rel="stylesheet" href="css/bootstrap.min.css" >
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
@@ -41,21 +41,17 @@
 	</table>
 	</div>
 
-	<h3>Keycloak 操作</h3>
+	<h3>UMA リソース作成</h3>
 	<div class="container-fluid">
-		<a href="javascript: location.href=keycloak.createAccountUrl().replace('account','account/resource');"  class="btn btn-primary btn-default active" role="button">マイリソース</a>
-		<a href="javascript: keycloak.logout();" class="btn btn-default active" role="button">ログアウト</a>
-	</div>
-
-	<h3>UMA 操作</h3>
-	<div class="container-fluid">
-		<a href="createItem.jsp" class="btn btn-primary btn-default active" role="button">リソースの新規作成</a>
-		<a href="#" onClick="getEntitlement()" class="btn btn-primary btn-default active" role="button">現在のアクセス権の確認</a>
-	</div>
-
-	<h3>UMA リソースアクセス</h3>
-	<div class="container-fluid">
-		<div class="resourcesTable" ></div>
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="itemName">リソース名</label>
+				<input type="text" class="form-control" id="name" placeholder="リソース名を入力してください。">
+				<label for="itemMemo">メモ</label>
+				<input type="text" class="form-control" id="memo" placeholder="メモを入力してください。">
+			</div>
+			<a href="#" onClick="create()" class="btn btn-primary btn-default active" role="button">リソースの作成</a>
+		</form>
 	</div>
 
 	<h3>詳細コンソール</h3>
@@ -63,9 +59,8 @@
 		<textarea class="resultConsole" cols="100" rows="10" wrap="off"></textarea>
 	</div>
 
-	<h3>別の認可サービス</h3>
 	<div class="container-fluid">
-	<a href="https://authz.example.com/authz-app/"  class="btn btn-primary btn-default active" role="button">集中管理方式</a>
+		<a href="https://uma.example.com/authz-uma-client/"  class="btn btn-primary btn-default active" role="button">トップに戻る</a>
 	</div>
 
 </div>

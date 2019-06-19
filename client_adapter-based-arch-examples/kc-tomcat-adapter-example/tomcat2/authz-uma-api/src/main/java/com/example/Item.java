@@ -1,11 +1,14 @@
 package com.example;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -20,18 +23,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.authorization.client.AuthorizationDeniedException;
 import org.keycloak.authorization.client.AuthzClient;
 import org.keycloak.authorization.client.ClientAuthorizationContext;
 import org.keycloak.authorization.client.representation.TokenIntrospectionResponse;
-import org.keycloak.authorization.client.util.HttpResponseException;
-import org.keycloak.representations.idm.authorization.AuthorizationRequest;
 import org.keycloak.representations.idm.authorization.AuthorizationResponse;
 import org.keycloak.representations.idm.authorization.Permission;
-import org.keycloak.representations.idm.authorization.PermissionRequest;
-import org.keycloak.representations.idm.authorization.PermissionResponse;
 import org.keycloak.representations.idm.authorization.ResourceRepresentation;
 import org.keycloak.representations.idm.authorization.ScopeRepresentation;
 
@@ -49,11 +48,20 @@ public class Item {
 
 	private static final String MESSAGE_RESOURCE_NOT_EXIST = "リソース（'%s）' が存在しません！";
 
+	private static SimpleDateFormat tokyoSdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+
+	static {
+		tokyoSdf.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
+	}
+
 	@Context
 	private HttpServletRequest servletRequest;
 
 	@Context
 	private ServletContext servletContext;
+
+
+	private static HashMap<String, ItemDetail> database = new HashMap<String, ItemDetail>();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -99,11 +107,21 @@ public class Item {
 	}
 
 	@POST
-	@Produces(MediaType.TEXT_PLAIN)
-	public String createResource(@QueryParam("name") String name) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createResource(@QueryParam("name") String name, @QueryParam("memo") String memo) {
 
 		String uuid = UUID.randomUUID().toString();
 		String subject = servletRequest.getUserPrincipal().getName();
+		String createUserId = getKeycloakSecurityContext().getToken().getPreferredUsername();
+
+		ItemDetail item = getItemDetail(uuid);
+		item.id = uuid;
+		item.name = name;
+		item.memo = memo;
+		item.createDate = tokyoSdf.format(new Date(System.currentTimeMillis()));
+		item.createUserId = createUserId;
+		item.resultMessage = "リソースが作成されました！";
+		database.put(uuid, item);
 
 		// (1) リソースで利用できる全てのスコープを HashSet に追加
 		HashSet<ScopeRepresentation> scopes = new HashSet<>();
@@ -113,68 +131,92 @@ public class Item {
 
 		// (2) ResourceRepresentation インスタンスの生成
 		String uri = URI_PREFIX + uuid;
-		String resourceName = name + " Item";
-		ResourceRepresentation newResource = new ResourceRepresentation(resourceName, scopes, uri,
+		ResourceRepresentation newResource = new ResourceRepresentation(name, scopes, uri,
 						"urn:authz-uma-api:resources:item");
 		newResource.setOwner(subject);
 		newResource.setOwnerManagedAccess(true);
 
 		// (3) 既に同一のリソースが作成されていないかチェック
-		ResourceRepresentation resource = getResourceRepresentationByName(resourceName, subject);
+		ResourceRepresentation resource = getResourceRepresentationByName(name, subject);
 		if ( resource != null) {
-			return "'" + resourceName + "' は既に作成済みです！";
+			item.resultMessage = "'" + name + "' は既に作成済みです！";
+			return Response.status(Response.Status.CONFLICT).entity(item).build();
 		}
 
 		// (4) リソースの作成(Protection API 経由)
 		getAuthzClient().protection().resource().create(newResource);
 
-		return "'" + resourceName + "' が作成されました！";
+		return Response.status(Response.Status.CREATED).entity(item).build();
 
 	}
 
 	@GET
 	@Path("/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String viewResource(@PathParam("id") String id) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response viewResource(@PathParam("id") String id) {
+
+		ItemDetail item = getItemDetail(id);
 
 		ResourceRepresentation resource = getResourceRepresentation(id);
 		if (resource == null) {
-			return String.format(MESSAGE_RESOURCE_NOT_EXIST, id);
+			item.resultMessage = String.format(MESSAGE_RESOURCE_NOT_EXIST, id);
+			return Response.status(Response.Status.NOT_FOUND).entity(item).build();
 		}
-		return "'" + resource.getName() + "' が参照されました！";
+		item.resultMessage = "'" + item.name + "' が参照されました！";
+
+		return Response.ok(item).build();
 
 	}
 
 	@PUT
 	@Path("/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String updateResource(@PathParam("id") String id) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateResource(@PathParam("id") String id, @QueryParam("detailMemo") String detailMemo) {
+
+		String updateUserId = getKeycloakSecurityContext().getToken().getPreferredUsername();
+
+		ItemDetail item = getItemDetail(id);
+		if (detailMemo != null) {
+			item.memo = detailMemo;
+			item.updateDate = tokyoSdf.format(new Date(System.currentTimeMillis()));
+			item.updateUserId = updateUserId;
+			item.resultMessage = "'" + item.name + "' が更新されました！";
+			database.put(id, item);
+		}
 
 		ResourceRepresentation resource = getResourceRepresentation(id);
 		if (resource == null) {
-			return String.format(MESSAGE_RESOURCE_NOT_EXIST, id);
+			item.resultMessage = String.format(MESSAGE_RESOURCE_NOT_EXIST, id);
+			return Response.status(Response.Status.NOT_FOUND).entity(item).build();
 		}
-		return "'" + resource.getName() + "' が更新されました！";
+
+		return Response.ok(item).build();
 
 	}
 
 	@DELETE
 	@Path("/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteResource(@PathParam("id") String id) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteResource(@PathParam("id") String id) {
+
+		ItemDetail item = getItemDetail(id);
+		item.resultMessage = "'" + item.name + "' が削除されました！";
+		database.remove(id);
 
 		// (1) リソース検索(Protection API 経由)
 		List<ResourceRepresentation> search = getResourceRepresentations(id);
 
 		// (2) 既にリソースが削除されていないかチェック
 		if (search.isEmpty()) {
-			return "このリソースは既に削除されています！";
+			item.resultMessage = "このリソースは既に削除されています！";
+			return Response.status(Response.Status.NOT_FOUND).entity(item).build();
 		}
 
 		// (3) リソースの削除(AProtection API 経由)
 		ResourceRepresentation resource = search.get(0);
 		getAuthzClient().protection().resource().delete(resource.getId());
-		return "'" + resource.getName() + "' が削除されました！";
+
+		return Response.ok(item).build();
 
 	}
 
@@ -200,47 +242,7 @@ public class Item {
 		return getAuthzClient().protection().resource().findByName(name, ownerId);
 	}
 
-	@GET
-	@Path("/requestScope")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String requestScope(@QueryParam("id") String id, @QueryParam("scope") String scope) {
-
-		// (1) パーミッション・チケット取得(Protection API 経由)
-		ResourceRepresentation resource = getResourceRepresentation(id);
-		if (resource == null) {
-			return String.format(MESSAGE_RESOURCE_NOT_EXIST, id);
-		}
-		PermissionRequest permissionReq = new PermissionRequest(resource.getId(), "item:" + scope);
-		PermissionResponse permissionRes = getAuthzClient().protection().permission().create(permissionReq);
-
-		boolean requested = false;
-
-		// (2) パーミッション・チケットから認可リクエストの作成
-		AuthorizationRequest authorizationReq = new AuthorizationRequest(permissionRes.getTicket());
-		try {
-			// (3) 認可リクエスト送信(Authorization Client API 経由)
-			getAuthzClient().authorization(getKeycloakSecurityContext().getTokenString()).authorize(authorizationReq);
-			requested = true;
-		} catch(AuthorizationDeniedException e) {
-			Throwable t = e.getCause();
-			if (t instanceof HttpResponseException && ((HttpResponseException)t).getStatusCode() == 403) {
-				// (4) 403 エラーであれば、パーミッション申請は成功
-				requested = true;
-			}
-		}
-
-		if (requested) {
-			return "'" + resource.getName() + "' に対して、'item:" + scope + "' スコープを要求しました！";
-		} else {
-			return "リクエスト失敗！";
-		}
-
-	}
-
-	@GET
-	@Path("/introspectRPT")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Permission> introspectRPT() {
+	private List<Permission> introspectRPT() {
 
 		// RPT 取得(ユーザーのアクセストークンで認可レスポンスの取得)
 		AuthorizationResponse response = getAuthzClient().authorization(getKeycloakSecurityContext().getTokenString())
@@ -276,5 +278,15 @@ public class Item {
 
 	private KeycloakSecurityContext getKeycloakSecurityContext() {
 		return KeycloakSecurityContext.class.cast(servletRequest.getAttribute(KeycloakSecurityContext.class.getName()));
+	}
+
+	private ItemDetail getItemDetail(String id) {
+
+		ItemDetail item = database.get(id);
+		if (item == null) {
+			item = new ItemDetail();
+		}
+		return item;
+
 	}
 }

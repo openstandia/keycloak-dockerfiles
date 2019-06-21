@@ -25,44 +25,46 @@
 
 <%-- ログイン前に画面が見えるのを抑止 --%>
 <body style="visibility:hidden">
-<div class="container-fluid">
 
-	<h3>ログインユーザー情報</h3>
-	<div class="container-fluid">
-	<table class="table table-striped">
-		<tr>
-			<th align="left">ユーザID</th>
-			<td><div id="username"></div></td>
-		</tr>
-		<tr>
-			<th align="left">メールアドレス</th>
-			<td><div id="email"></div></td>
-		</tr>
-	</table>
-	</div>
+<div class="panel panel-primary">
+	<div class="panel-heading">リソース新規作成</div>
+	<div class="panel-body">
+		ログインユーザID: <label id="username"></label><br>
 
-	<h3>UMA リソース作成</h3>
-	<div class="container-fluid">
-		<form class="form-inline">
-			<div class="form-group">
-				<label for="itemName">リソース名</label>
-				<input type="text" class="form-control" id="name" placeholder="リソース名を入力してください。">
-				<label for="itemMemo">メモ</label>
-				<input type="text" class="form-control" id="memo" placeholder="メモを入力してください。">
+		<!-- タブ・メニュー -->
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#listResources" data-toggle="tab">リソース作成</a></li>
+			<li><a href="#detailConsole" data-toggle="tab">詳細コンソール</a></li>
+		</ul>
+
+		<!-- タブ内容 -->
+		<div class="tab-content">
+			<div class="tab-pane active" id="listResources">
+				<br>
+				<div class="container-fluid">
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="itemName">リソース名</label>
+							<input type="text" class="form-control" id="name" placeholder="リソース名を入力してください。">
+							<label for="itemMemo">メモ</label>
+							<input type="text" class="form-control" id="memo" placeholder="メモを入力してください。">
+						</div>
+						<a href="#" onClick="create()" class="btn btn-primary btn-default active" role="button">リソースの作成</a>
+					</form>
+				</div>
+				<label for="resultMessage">結果メッセージ</label><input type="text" class="form-control" id="resultMessage" readonly>
 			</div>
-			<a href="#" onClick="create()" class="btn btn-primary btn-default active" role="button">リソースの作成</a>
-		</form>
+
+			<div class="tab-pane" id="detailConsole">
+				<br>
+				<div class="container-fluid">
+					<textarea class="resultConsole" cols="100" rows="15" wrap="off"></textarea>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<h3>詳細コンソール</h3>
-	<div class="container-fluid">
-		<textarea class="resultConsole" cols="100" rows="10" wrap="off"></textarea>
-	</div>
+	<div class="panel-footer"><a href="https://uma.example.com/authz-uma-client/">リソース一覧に戻る</a></div>
 
-	<div class="container-fluid">
-		<a href="https://uma.example.com/authz-uma-client/"  class="btn btn-primary btn-default active" role="button">トップに戻る</a>
-	</div>
-
-</div>
 </body>
 </html>

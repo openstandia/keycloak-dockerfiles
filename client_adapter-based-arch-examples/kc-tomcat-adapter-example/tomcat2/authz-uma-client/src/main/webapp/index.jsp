@@ -25,49 +25,69 @@
 
 <%-- ログイン前に画面が見えるのを抑止 --%>
 <body style="visibility:hidden">
-<div class="container-fluid">
 
-	<h3>ログインユーザー情報</h3>
-	<div class="container-fluid">
-	<table class="table table-striped">
-		<tr>
-			<th align="left">ユーザID</th>
-			<td><div id="username"></div></td>
-		</tr>
-		<tr>
-			<th align="left">メールアドレス</th>
-			<td><div id="email"></div></td>
-		</tr>
-	</table>
+<div class="panel panel-primary">
+	<div class="panel-heading">リソース一覧
+	</div>
+	<div class="panel-body">
+		ログインユーザID: <label id="username"></label><br>
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="javascript: displayResources(true);">リソース一覧の更新</a></li>
+						<li><a href="createItem.jsp">リソースの新規作成</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">認可サーバーの操作 <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+						<li><a href="https://sso.example.com/auth/realms/demo-authz/account/resource?referrer=authz-uma-client&referrer_uri=https%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F">"マイリソース" の確認</a></li>
+						<li><a href="#" onClick="getEntitlement()">現在のパーミッション確認</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="javascript: keycloak.logout();">ログアウト</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+
+		<!-- タブ・メニュー -->
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#listResources" data-toggle="tab">リソース一覧</a></li>
+			<li><a href="#detailConsole" data-toggle="tab">詳細コンソール</a></li>
+		</ul>
+
+		<!-- タブ内容 -->
+		<div class="tab-content">
+			<div class="tab-pane active" id="listResources">
+				<br>
+				<div class="resourcesTable" ></div>
+				<label for="resultMessage">簡易メッセージ</label><input type="text" class="form-control" id="resultMessage" readonly>
+			</div>
+			<div class="tab-pane" id="detailConsole">
+				<br>
+				<div class="container-fluid">
+					<textarea class="resultConsole" cols="100" rows="15" wrap="off"></textarea>
+				</div>
+			</div>
+		</div>
 	</div>
 
-	<h3>Keycloak 操作</h3>
-	<div class="container-fluid">
-		<a href="javascript: location.href=keycloak.createAccountUrl().replace('account','account/resource');"  class="btn btn-primary btn-default active" role="button">マイリソース</a>
-		<a href="javascript: keycloak.logout();" class="btn btn-default active" role="button">ログアウト</a>
-	</div>
+	<div class="panel-footer"><a href="https://authz.example.com/authz-app/">集中管理方式へ</a></div>
 
-	<h3>UMA 操作</h3>
-	<div class="container-fluid">
-		<a href="createItem.jsp" class="btn btn-primary btn-default active" role="button">リソースの新規作成</a>
-		<a href="#" onClick="getEntitlement()" class="btn btn-primary btn-default active" role="button">現在のアクセス権の確認</a>
-	</div>
-
-	<h3>UMA リソースアクセス</h3>
-	<div class="container-fluid">
-		<div class="resourcesTable" ></div>
-	</div>
-
-	<h3>詳細コンソール</h3>
-	<div class="container-fluid">
-		<textarea class="resultConsole" cols="100" rows="10" wrap="off"></textarea>
-	</div>
-
-	<h3>別の認可サービス</h3>
-	<div class="container-fluid">
-	<a href="https://authz.example.com/authz-app/"  class="btn btn-primary btn-default active" role="button">集中管理方式</a>
-	</div>
-
-</div>
 </body>
 </html>

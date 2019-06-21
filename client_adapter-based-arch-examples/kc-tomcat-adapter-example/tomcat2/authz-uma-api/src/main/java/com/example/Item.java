@@ -61,7 +61,7 @@ public class Item {
 	private ServletContext servletContext;
 
 
-	private static HashMap<String, ItemDetail> database = new HashMap<String, ItemDetail>();
+	private static Map<String, ItemDetail> database = new HashMap<>();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -85,7 +85,13 @@ public class Item {
 					itemDisplayBean
 							.setOwner(resource.getOwner().getId().equals(servletRequest.getUserPrincipal().getName()));
 
-					Permission permission = permissionMap.get(resource.getName());
+					ItemDetail detail = database.get(itemDisplayBean.subject);
+					if (detail != null) {
+						// introspectRPT の応答にはユーザーIDが含まれていないため、DBからユーザーIDを取得
+						itemDisplayBean.setOwnerName(detail.createUserId);
+					}
+
+					Permission permission = permissionMap.get(resource.getId());
 					if (permission != null) {
 						// 当該リソースに対して、各スコープのパーミッションがあるかチェック
 						itemDisplayBean.setViewable(permission.getScopes().contains(SCOPE_ITEM_VIEW));
@@ -128,6 +134,7 @@ public class Item {
 		scopes.add(new ScopeRepresentation(SCOPE_ITEM_VIEW));
 		scopes.add(new ScopeRepresentation(SCOPE_ITEM_UPDATE));
 		scopes.add(new ScopeRepresentation(SCOPE_ITEM_DELETE));
+
 
 		// (2) ResourceRepresentation インスタンスの生成
 		String uri = URI_PREFIX + uuid;
@@ -262,7 +269,7 @@ public class Item {
 		Map<String, Permission> permissionMap = new HashMap<>();
 		// RPT のうちパーミッションのリストのみ JSON で送信
 		for (Permission permission : introspectRPT()) {
-			permissionMap.put(permission.getResourceName(), permission);
+			permissionMap.put(permission.getResourceId(), permission);
 		}
 		return permissionMap;
 

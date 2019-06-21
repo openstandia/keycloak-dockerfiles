@@ -38,46 +38,48 @@
 
 <%-- ログイン前に画面が見えるのを抑止 --%>
 <body style="visibility:hidden">
-<div class="container-fluid">
 
-	<h3>ログインユーザー情報</h3>
-	<div class="container-fluid">
-	<table class="table table-striped">
-		<tr>
-			<th align="left">ユーザID</th>
-			<td><div id="username"></div></td>
-		</tr>
-		<tr>
-			<th align="left">メールアドレス</th>
-			<td><div id="email"></div></td>
-		</tr>
-	</table>
-	</div>
+<div class="panel panel-primary">
+	<div class="panel-heading">リソース更新</div>
+	<div class="panel-body">
+		ログインユーザID: <label id="username"></label><br>
 
-	<h3>UMA リソース詳細</h3>
-	<div class="container-fluid">
-		<form class="form-inline">
-			<div class="form-group">
-				<label for="itemName">リソース名</label>
-				<input type="text" class="form-control" id="detailName" readonly>
+		<!-- タブ・メニュー -->
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#modifyResource" data-toggle="tab">リソース更新</a></li>
+			<li><a href="#detailConsole" data-toggle="tab">詳細コンソール</a></li>
+		</ul>
+
+		<!-- タブ内容 -->
+		<div class="tab-content">
+			<div class="tab-pane active" id="modifyResource">
+				<br>
+				<div class="container-fluid">
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="itemName">リソース名</label>
+							<input type="text" class="form-control" id="detailName" readonly>
+						</div>
+						<div class="form-group">
+							<label for="itemMemo">メモ</label>
+							<input type="text" class="form-control" id="detailMemo" >
+						</div>
+						<input type="hidden" class="form-control" id="detailId">
+						<a href="#" onClick="update()" id="updateButton" class="btn btn-primary btn-default active" role="button" disabled>更新</a>
+					</form>
+				</div>
+				<label for="resultMessage">簡易メッセージ</label><input type="text" class="form-control" id="resultMessage" readonly>
 			</div>
-			<div class="form-group">
-				<label for="itemMemo">メモ</label>
-				<input type="text" class="form-control" id="detailMemo" >
+			<div class="tab-pane" id="detailConsole">
+				<br>
+				<div class="container-fluid">
+					<textarea class="resultConsole" cols="100" rows="15" wrap="off"></textarea>
+				</div>
 			</div>
-			<input type="hidden" class="form-control" id="detailId">
-			<a href="#" onClick="update()" id="updateButton" class="btn btn-primary btn-default active" role="button" disabled>更新</a>
-		</form>
+		</div>
 	</div>
 
-	<h3>詳細コンソール</h3>
-	<div class="container-fluid">
-		<textarea class="resultConsole" cols="100" rows="10" wrap="off"></textarea>
-	</div>
-
-	<div class="container-fluid">
-		<a href="https://uma.example.com/authz-uma-client/"  class="btn btn-primary btn-default active" role="button">トップに戻る</a>
-	</div>
+	<div class="panel-footer"><a href="https://uma.example.com/authz-uma-client/">リソース一覧に戻る</a></div>
 
 </div>
 </body>

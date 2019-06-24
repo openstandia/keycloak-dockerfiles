@@ -254,7 +254,7 @@ function displayResources(detail) {
 		dataType: 'json'
 	}).done(function(resources){
 		$('.resourcesTable').text("");
-		var tableHtml = "<table  class='table table-striped'><tr><th>リソース名</th><th>リソースオーナー</th><th>API アクセスチェック</th><th>パーミッション申請</th></tr>";
+		var tableHtml = "<table  class='table table-striped'><tr><th>リソース名</th><th>リソースオーナー</th><th>リソース操作</th><th>権限申請</th></tr>";
 		for (var i in resources) {
 			tableHtml += "<tr>";
 				tableHtml += "<td>"+ resources[i].name+ "</td>";

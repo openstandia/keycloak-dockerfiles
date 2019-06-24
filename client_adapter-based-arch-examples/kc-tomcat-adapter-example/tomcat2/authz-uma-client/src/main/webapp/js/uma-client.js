@@ -260,19 +260,19 @@ function displayResources(detail) {
 				tableHtml += "<td>"+ resources[i].name+ "</td>";
 				tableHtml += "<td>" + resources[i].ownerName + "</td>";
 				tableHtml += "<td>";
-					tableHtml += " <a href=\"modifyItem.jsp?id=" + resources[i].subject + "\" class='btn btn-primary' role='button'>参照</a>";
-					tableHtml += " <a href='#' onClick=\"submit('" + resources[i].subject +"', 'DELETE')\" class='btn btn-primary' role='button'>削除</a>";
+					tableHtml += " <a href=\"modifyItem.jsp?id=" + resources[i].subject + "\" class='btn " + (resources[i].isOwner ? "btn-default" : "btn-primary")+ "' role='button'>参照</a>";
+					tableHtml += " <a href='#' onClick=\"submit('" + resources[i].subject +"', 'DELETE')\" class='btn " + (resources[i].isOwner ? "btn-default" : "btn-primary") + "' role='button'>削除</a>";
 				tableHtml += "</td>";
 				tableHtml += "<td>";
 				if ( !resources[i].isOwner ) {
 					if (!resources[i].viewable) {
-						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject +"', 'GET')\" class='btn btn-primary' role='button'>参照権限申請</a>";
+						tableHtml += createRequestButtonHtml(resources[i].subject, 'GET');
 					}
 					if (!resources[i].updatable) {
-						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject +"', 'PUT')\" class='btn btn-primary' role='button'>更新権限申請</a>";
+						tableHtml += createRequestButtonHtml(resources[i].subject, 'PUT');
 					}
 					if (!resources[i].deletable) {
-						tableHtml += " <a href='#' onClick=\"requestScope('" + resources[i].subject +"', 'DELETE')\" class='btn btn-primary' role='button'>削除権限申請</a>";
+						tableHtml += createRequestButtonHtml(resources[i].subject, 'DELETE');
 					}
 				}
 				tableHtml += "</td>";
@@ -299,3 +299,8 @@ function displayResources(detail) {
 	});
 }
 
+function createRequestButtonHtml(id , method) {
+
+	return " <a href='#' onClick=\"requestScope('" + id +"', '"+ method + "')\" class='btn btn-primary' role='button'>" + operationName[method] + "権限申請</a>";
+
+}

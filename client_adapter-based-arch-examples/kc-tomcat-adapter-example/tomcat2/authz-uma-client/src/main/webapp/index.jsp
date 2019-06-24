@@ -46,20 +46,19 @@
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li><a href="javascript: displayResources(true);">リソース一覧の更新</a></li>
-						<li><a href="createItem.jsp">リソースの新規作成</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-left">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">認可サーバーの操作 <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">リソース管理 <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-						<li><a href="https://sso.example.com/auth/realms/demo-authz/account/resource?referrer=authz-uma-client&referrer_uri=https%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F">"マイリソース" の確認</a></li>
-						<li><a href="#" onClick="getEntitlement()">現在のパーミッション確認</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="javascript: keycloak.logout();">ログアウト</a></li>
+								<li><a href="javascript: displayResources(true);">リソース一覧の更新</a></li>
+								<li><a href="createItem.jsp">リソースの新規作成</a></li>
+								<li><a href="https://sso.example.com/auth/realms/demo-authz/account/resource?referrer=authz-uma-client&referrer_uri=https%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F">リソースの共有／申請の承認</a></li>
+								<li><a href="#" onClick="getEntitlement()">現在のパーミッション確認</a></li>
 							</ul>
 						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="javascript: keycloak.logout();">ログアウト</a></li>
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->

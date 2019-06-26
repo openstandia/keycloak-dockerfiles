@@ -141,7 +141,7 @@ function submit(id, method, token, submitRequest) {
 					var params = wwwAuthenticateHeader.split(',');
 					var ticket;
 
-					// WWW-Authenticate ヘッダー内の ticket パラメータを取得
+					// (1) WWW-Authenticate ヘッダー内の ticket パラメータを取得
 					for (i = 0; i < params.length; i++) {
 						var param = params[i].split('=');
 
@@ -151,24 +151,24 @@ function submit(id, method, token, submitRequest) {
 						}
 					}
 
-					// 認可リクエストインスタンスを生成し、取得した ticket を設定
+					// (2) 認可リクエストインスタンスを生成し、取得した ticket を設定
 					var authorizationRequest = {};
 					authorizationRequest.ticket = ticket;
 
-					// パーミッション申請の有無を設定
+					// (3) パーミッション申請の有無を設定
 					if (submitRequest) {
 						authorizationRequest.submitRequest = submitRequest;
 					} else {
 						authorizationRequest.submitRequest = false;
 					}
 
-					// 認可サーバーへ認可リクエスト送信
+					// (4) 認可サーバーへ認可リクエスト送信
 					authorization.authorize(authorizationRequest).then(function (rpt) {
 
 						// パーミッション申請でなければ
 						if (!submitRequest) {
 
-							// 取得した RPT を使って当初のリクエストをリトライ
+							// (5) 取得した RPT を使って当初のリクエストをリトライ
 							submit(id, method, rpt);
 						}
 					}, function () {

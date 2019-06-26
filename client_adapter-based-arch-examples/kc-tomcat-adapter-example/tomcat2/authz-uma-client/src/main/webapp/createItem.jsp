@@ -52,7 +52,7 @@
 						<a href="#" onClick="create()" class="btn btn-primary btn-default active" role="button">リソースの作成</a>
 					</form>
 				</div>
-				<label for="resultMessage">結果メッセージ</label><input type="text" class="form-control" id="resultMessage" readonly>
+				<label for="resultMessage">簡易メッセージ</label><input type="text" class="form-control" id="resultMessage" readonly>
 			</div>
 
 			<div class="tab-pane" id="detailConsole">

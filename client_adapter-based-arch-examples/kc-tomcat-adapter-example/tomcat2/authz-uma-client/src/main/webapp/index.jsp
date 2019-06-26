@@ -52,7 +52,7 @@
 							<ul class="dropdown-menu">
 								<li><a href="javascript: displayResources(true);">リソース一覧の更新</a></li>
 								<li><a href="createItem.jsp">リソースの新規作成</a></li>
-								<li><a href="https://sso.example.com/auth/realms/demo-authz/account/resource?referrer=authz-uma-client&referrer_uri=https%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F">リソースの共有／申請の承認</a></li>
+								<li><a href="https://sso.example.com/auth/realms/demo-authz/account/resource?referrer=authz-uma-client&referrer_uri=https%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F">リソースの共有／申請の確認・承認</a></li>
 								<li><a href="#" onClick="getEntitlement()">現在のパーミッション確認</a></li>
 							</ul>
 						</li>

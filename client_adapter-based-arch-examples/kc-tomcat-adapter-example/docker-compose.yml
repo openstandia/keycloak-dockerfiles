@@ -45,6 +45,7 @@ services:
   # DB(MySQL)コンテナ設定
   db:
     container_name: kc-example-db
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
     build:
       context: ./mysql
       args:
@@ -86,7 +87,7 @@ services:
       DB_DATABASE: keycloakdb
       DB_USER: keycloak
       DB_PASSWORD: password
-      JDBC_PARAMS: "useSSL=false"
+      JDBC_PARAMS: "useSSL=false&useUnicode=true&characterEncoding=UTF-8"
 #      KEYCLOAK_USER: admin
 #      KEYCLOAK_PASSWORD: password
       PROXY_ADDRESS_FORWARDING: "true"

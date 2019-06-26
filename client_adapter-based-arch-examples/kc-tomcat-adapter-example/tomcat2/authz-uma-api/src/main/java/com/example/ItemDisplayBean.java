@@ -8,6 +8,7 @@ public class ItemDisplayBean {
 	public String name;
 	public String uri;
 	public String subject;
+	public String ownerName;
 
 	public boolean isOwner;
 	public boolean viewable;
@@ -53,6 +54,14 @@ public class ItemDisplayBean {
 
 	public void setDeletable(boolean deletable) {
 		this.deletable = deletable;
+	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
 	}
 
 }

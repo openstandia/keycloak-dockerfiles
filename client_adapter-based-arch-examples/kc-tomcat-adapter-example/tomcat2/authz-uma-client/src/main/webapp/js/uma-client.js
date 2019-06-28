@@ -68,8 +68,8 @@ function create() {
 		return;
 	}
 
-	id = "?name=" + encodeURI(name)+ "&memo=" + encodeURI(memo);
-	submit(id, "POST");
+	var requestPath = "?name=" + encodeURI(name)+ "&memo=" + encodeURI(memo);
+	submit(requestPath, "POST");
 }
 
 function update() {
@@ -78,21 +78,21 @@ function update() {
 		return;
 	}
 
-	var id = document.getElementById("detailId").value;
+	var resourceId = document.getElementById("detailId").value;
 	var memo = document.getElementById("detailMemo").value;
 
-	id = id + "?detailMemo=" + encodeURI(memo);
-	submit(id, "PUT");
+	var requestPath = resourceId + "?detailMemo=" + encodeURI(memo);
+	submit(requestPath, "PUT");
 }
 
-function submit(id, method, token, submitRequest) {
+function submit(requestPath, method, token, submitRequest) {
 
 	// token パラメータ(RPT)がないときは、アクセストークンを利用
 	if (!token) {
 		token = accessToken;
 	}
 
-	var requestUri = apiContextPath + uriPrefix + id;
+	var requestUri = apiContextPath + uriPrefix + requestPath;
 	$.ajax({
 		type: method,
 		url: requestUri,
@@ -169,7 +169,7 @@ function submit(id, method, token, submitRequest) {
 						if (!submitRequest) {
 
 							// (5) 取得した RPT を使って当初のリクエストをリトライ
-							submit(id, method, rpt);
+							submit(requestPath, method, rpt);
 						}
 					}, function () {
 						// RPT が取得できない場合はアクセス権限がないので、401 エラーをそのまま返す
@@ -218,9 +218,9 @@ function submit(id, method, token, submitRequest) {
 
 }
 
-function requestScope(id, method) {
+function requestScope(requestPath, method) {
 
-	submit(id, method, null, true);
+	submit(requestPath, method, null, true);
 
 }
 
@@ -299,8 +299,8 @@ function displayResources(detail) {
 	});
 }
 
-function createRequestButtonHtml(id , method) {
+function createRequestButtonHtml(resourceId , method) {
 
-	return " <a href='#' onClick=\"requestScope('" + id +"', '"+ method + "')\" class='btn btn-primary' role='button'>" + operationName[method] + "権限申請</a>";
+	return " <a href='#' onClick=\"requestScope('" + resourceId +"', '"+ method + "')\" class='btn btn-primary' role='button'>" + operationName[method] + "権限申請</a>";
 
 }

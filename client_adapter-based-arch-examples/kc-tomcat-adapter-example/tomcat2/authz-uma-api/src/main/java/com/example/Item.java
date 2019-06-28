@@ -48,12 +48,6 @@ public class Item {
 
 	private static final String MESSAGE_RESOURCE_NOT_EXIST = "リソース（'%s）' が存在しません！";
 
-	private static SimpleDateFormat tokyoSdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
-
-	static {
-		tokyoSdf.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
-	}
-
 	@Context
 	private HttpServletRequest servletRequest;
 
@@ -124,6 +118,8 @@ public class Item {
 		item.id = uuid;
 		item.name = name;
 		item.memo = memo;
+		SimpleDateFormat tokyoSdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+		tokyoSdf.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
 		item.createDate = tokyoSdf.format(new Date(System.currentTimeMillis()));
 		item.createUserId = createUserId;
 		item.resultMessage = "リソースが作成されました！";
@@ -185,6 +181,8 @@ public class Item {
 		ItemDetail item = getItemDetail(id);
 		if (detailMemo != null) {
 			item.memo = detailMemo;
+			SimpleDateFormat tokyoSdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+			tokyoSdf.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
 			item.updateDate = tokyoSdf.format(new Date(System.currentTimeMillis()));
 			item.updateUserId = updateUserId;
 			item.resultMessage = "'" + item.name + "' が更新されました！";

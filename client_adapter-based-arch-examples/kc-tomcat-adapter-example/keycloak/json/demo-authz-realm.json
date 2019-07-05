@@ -279,14 +279,6 @@
         "containerId" : "d178b127-c2c8-44b0-9208-7c7c8dd6255a",
         "attributes" : { }
       } ],
-      "authz-uma-client" : [ {
-        "id" : "5d410220-8626-486d-9865-838f8ee911bb",
-        "name" : "uma_protection",
-        "composite" : false,
-        "clientRole" : true,
-        "containerId" : "d5a38e2a-070b-456b-8647-65fb2d3805cb",
-        "attributes" : { }
-      } ],
       "authz-uma-api" : [ {
         "id" : "e95c8a7d-ddae-4f2c-9531-9e1001cc313b",
         "name" : "uma_protection",

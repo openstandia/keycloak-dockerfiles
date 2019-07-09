@@ -27,5 +27,6 @@ ADD ./certs/example.crt /tmp/
 RUN keytool -import -alias example.com -file /tmp/example.crt -keystore /etc/pki/java/cacerts -storepass changeit -noprompt
 RUN rm -f /tmp/example.crt
 
-# KEYCLOAK-10660への対応
-COPY ./lib/keycloak-services-4.8.3.Final.jar /opt/jboss/keycloak/modules/system/layers/keycloak/org/keycloak/keycloak-services/main/
+# KEYCLOAK-10660、KEYCLOAK-10783、KEYCLOAK-10784への対応
+ADD ./patch/themes /opt/jboss/keycloak/themes
+ADD ./patch/modules /opt/jboss/keycloak/modules

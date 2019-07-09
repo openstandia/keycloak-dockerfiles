@@ -15,8 +15,8 @@
 
 <link rel="stylesheet" href="css/bootstrap.min.css" >
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-<script src="https://sso.example.com/auth/js/keycloak.js"></script>
-<script src="https://sso.example.com/auth/js/keycloak-authz.js"></script>
+<script src="http://sso.example.com/auth/js/keycloak.js"></script>
+<script src="http://sso.example.com/auth/js/keycloak-authz.js"></script>
 <script src="js/jquery-3.3.1.min.js" type="text/javascript" ></script>
 <script src="js/jwt-decode.min.js" type="text/javascript" ></script>
 <script src="js/bootstrap.min.js"></script>
@@ -79,7 +79,7 @@
 		</div>
 	</div>
 
-	<div class="panel-footer"><a href="https://uma.example.com/authz-uma-client/">リソース一覧に戻る</a></div>
+	<div class="panel-footer"><a href="http://uma.example.com/authz-uma-client/">リソース一覧に戻る</a></div>
 
 </div>
 </body>

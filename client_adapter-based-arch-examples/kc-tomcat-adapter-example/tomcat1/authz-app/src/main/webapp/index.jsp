@@ -51,7 +51,7 @@
 
 	<h3>Keycloak 操作</h3>
 	<div class="container-fluid">
-		<a href="<%=logoutEndpoint%>?redirect_uri=https%3A%2F%2Fauthz.example.com%2Fauthz-app%2F" class="btn btn-default active" role="button">ログアウト</a>
+		<a href="<%=logoutEndpoint%>?redirect_uri=http%3A%2F%2Fauthz.example.com%2Fauthz-app%2F" class="btn btn-default active" role="button">ログアウト</a>
 	</div>
 
 	<h3>アクセス制限チェック</h3>
@@ -99,7 +99,7 @@
 
 	<h3>別の認可サービス</h3>
 	<div class="container-fluid">
-		<a href="https://uma.example.com/authz-uma-client/"  class="btn btn-primary btn-default active" role="button">UMA 方式</a>
+		<a href="http://uma.example.com/authz-uma-client/"  class="btn btn-primary btn-default active" role="button">UMA 方式</a>
 	</div>
 
 </div>

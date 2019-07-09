@@ -21,12 +21,6 @@ CMD ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migratio
 # Normal
 #CMD ["-b", "0.0.0.0"]
 
-# 証明書のインポート
-USER root
-ADD ./certs/example.crt /tmp/
-RUN keytool -import -alias example.com -file /tmp/example.crt -keystore /etc/pki/java/cacerts -storepass changeit -noprompt
-RUN rm -f /tmp/example.crt
-
 # KEYCLOAK-10660、KEYCLOAK-10783、KEYCLOAK-10784への対応
 ADD ./patch/themes /opt/jboss/keycloak/themes
 ADD ./patch/modules /opt/jboss/keycloak/modules

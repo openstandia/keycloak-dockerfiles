@@ -29,10 +29,8 @@ services:
       - app2
     ports:
       - 80:80
-      - 443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./lb/certs:/etc/nginx/certs
     networks:
       default:
         aliases:

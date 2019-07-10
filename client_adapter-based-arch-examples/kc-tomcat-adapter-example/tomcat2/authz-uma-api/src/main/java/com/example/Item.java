@@ -217,7 +217,7 @@ public class Item {
 			return Response.status(Response.Status.NOT_FOUND).entity(item).build();
 		}
 
-		// (3) リソースの削除(AProtection API 経由)
+		// (3) リソースの削除(Protection API 経由)
 		ResourceRepresentation resource = search.get(0);
 		getAuthzClient().protection().resource().delete(resource.getId());
 

@@ -1716,7 +1716,7 @@
   "dockerAuthenticationFlow" : "docker auth",
   "attributes" : {
     "_browser_header.xXSSProtection" : "1; mode=block",
-    "_browser_header.strictTransportSecurity" : "max-age=31536000; includeSubDomains",
+    "_browser_header.strictTransportSecurity" : "",
     "_browser_header.xFrameOptions" : "SAMEORIGIN",
     "permanentLockout" : "false",
     "quickLoginCheckMilliSeconds" : "1000",

@@ -86,7 +86,7 @@
 		</div>
 	</div>
 
-	<div class="panel-footer"><a href="http://authz.example.com/authz-app/">集中管理方式へ</a></div>
+	<div class="panel-footer"><a href="https://authz.example.com/authz-app/">集中管理方式へ</a></div>
 
 </body>
 </html>

@@ -13,8 +13,8 @@
 
 <link rel="stylesheet" href="css/bootstrap.min.css" >
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-<script src="https://sso.example.com/auth/js/keycloak.js"></script>
-<script src="https://sso.example.com/auth/js/keycloak-authz.js"></script>
+<script src="http://sso.example.com/auth/js/keycloak.js"></script>
+<script src="http://sso.example.com/auth/js/keycloak-authz.js"></script>
 <script src="js/jquery-3.3.1.min.js" type="text/javascript" ></script>
 <script src="js/jwt-decode.min.js" type="text/javascript" ></script>
 <script src="js/bootstrap.min.js"></script>
@@ -52,7 +52,7 @@
 							<ul class="dropdown-menu">
 								<li><a href="javascript: displayResources(true);">リソース一覧の更新</a></li>
 								<li><a href="createItem.jsp">リソースの新規作成</a></li>
-								<li><a href="https://sso.example.com/auth/realms/demo-authz/account/resource?referrer=authz-uma-client&referrer_uri=https%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F">リソースの共有／申請の確認・承認</a></li>
+								<li><a href="http://sso.example.com/auth/realms/demo-authz/account/resource?referrer=authz-uma-client&referrer_uri=http%3A%2F%2Fuma.example.com%2Fauthz-uma-client%2F">リソースの共有／申請の確認・承認</a></li>
 								<li><a href="#" onClick="getEntitlement()">現在のパーミッション確認</a></li>
 							</ul>
 						</li>
@@ -85,8 +85,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="panel-footer"><a href="https://authz.example.com/authz-app/">集中管理方式へ</a></div>
 
 </body>
 </html>

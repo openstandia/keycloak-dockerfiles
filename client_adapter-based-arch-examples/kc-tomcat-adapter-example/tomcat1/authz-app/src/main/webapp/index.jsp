@@ -97,11 +97,6 @@
 	</table>
 	</div>
 
-	<h3>別の認可サービス</h3>
-	<div class="container-fluid">
-		<a href="https://uma.example.com/authz-uma-client/"  class="btn btn-primary btn-default active" role="button">UMA 方式</a>
-	</div>
-
 </div>
 </body>
 </html>

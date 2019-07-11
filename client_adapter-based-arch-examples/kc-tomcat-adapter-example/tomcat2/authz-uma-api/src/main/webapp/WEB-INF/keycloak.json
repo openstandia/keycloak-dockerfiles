@@ -1,8 +1,7 @@
 {
   "realm": "demo-authz",
-  "auth-server-url": "https://sso.example.com/auth",
-  "ssl-required" : "external",
-  "disable-trust-manager": true,
+  "auth-server-url": "http://sso.example.com/auth",
+  "ssl-required" : "none",
   "resource": "authz-uma-api",
   "bearer-only" : true,
   "credentials": {

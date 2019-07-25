@@ -139,14 +139,14 @@ public class Item {
 		newResource.setOwner(subject);
 		newResource.setOwnerManagedAccess(true);
 
-		// (3) 既に同一のリソースが作成されていないかチェック
+		// (3) 既に同一のリソース情報が登録されていないかチェック
 		ResourceRepresentation resource = getResourceRepresentationByName(name, subject);
 		if ( resource != null) {
 			item.resultMessage = "'" + name + "' は既に作成済みです！";
 			return Response.status(Response.Status.CONFLICT).entity(item).build();
 		}
 
-		// (4) リソースの作成(Protection API 経由)
+		// (4) リソース情報の登録(Protection API 経由)
 		getAuthzClient().protection().resource().create(newResource);
 
 		return Response.status(Response.Status.CREATED).entity(item).build();
@@ -208,16 +208,16 @@ public class Item {
 		item.resultMessage = "'" + item.name + "' が削除されました！";
 		database.remove(id);
 
-		// (1) リソース検索(Protection API 経由)
+		// (1) リソース情報の検索(Protection API 経由)
 		List<ResourceRepresentation> search = getResourceRepresentations(id);
 
-		// (2) 既にリソースが削除されていないかチェック
+		// (2) 既にリソース情報が削除されていないかチェック
 		if (search.isEmpty()) {
 			item.resultMessage = "このリソースは既に削除されています！";
 			return Response.status(Response.Status.NOT_FOUND).entity(item).build();
 		}
 
-		// (3) リソースの削除(Protection API 経由)
+		// (3) リソース情報の削除(Protection API 経由)
 		ResourceRepresentation resource = search.get(0);
 		getAuthzClient().protection().resource().delete(resource.getId());
 

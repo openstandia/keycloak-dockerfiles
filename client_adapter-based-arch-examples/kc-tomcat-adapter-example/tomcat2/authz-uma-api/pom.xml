@@ -60,7 +60,7 @@
 	    <dependency>
 	        <groupId>org.keycloak</groupId>
 	        <artifactId>keycloak-core</artifactId>
-	        <version>4.8.3.Final</version>
+	        <version>20.0.3</version>
           	<scope>provided</scope>
 	    </dependency>	    <dependency>
 	        <groupId>org.keycloak</groupId>
